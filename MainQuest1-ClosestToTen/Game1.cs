@@ -29,7 +29,7 @@ namespace MainQuest1_ClosestToTen
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // TODO: use this.Content to load your game content here 
             int rectangleWidth = 200;
             int rectangleHeight = 100;
             int x = (GraphicsDevice.Viewport.Width - rectangleWidth) / 2; //Screen size divided by 2 and offset by half rectangle size
