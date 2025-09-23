@@ -9,8 +9,11 @@ namespace MainQuest1_ClosestToTen
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Rectangle _rectangle;
+        private Rectangle _redRectangle;
+        private Rectangle _blueRectangle;
         private Texture2D _whitePixelTexture;
+        private Texture2D _redPixelTexture;
+        private Texture2D _bluePixelTexture;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -32,9 +35,13 @@ namespace MainQuest1_ClosestToTen
             // TODO: use this.Content to load your game content here 
             int rectangleWidth = 200;
             int rectangleHeight = 100;
-            int x = (GraphicsDevice.Viewport.Width - rectangleWidth) / 2; //Screen size divided by 2 and offset by half rectangle size
-            int y = (GraphicsDevice.Viewport.Height - rectangleHeight) / 2;
-            _rectangle = new Rectangle(x, y, rectangleWidth, rectangleHeight);
+            int redX = 0;
+            int redY = GraphicsDevice.Viewport.Height - rectangleHeight;
+            int blueX = GraphicsDevice.Viewport.Width - rectangleWidth;
+            int blueY = GraphicsDevice.Viewport.Height - rectangleHeight;
+
+            _redRectangle = new Rectangle(redX, redY, rectangleWidth, rectangleHeight);
+            _blueRectangle = new Rectangle(blueX, blueY, rectangleWidth, rectangleHeight);
 
             _whitePixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             _whitePixelTexture.SetData(new Color[] { Color.White });
@@ -57,7 +64,8 @@ namespace MainQuest1_ClosestToTen
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(_whitePixelTexture, _rectangle, Color.White);
+            _spriteBatch.Draw(_whitePixelTexture, _redRectangle, Color.Red);
+            _spriteBatch.Draw(_whitePixelTexture, _blueRectangle, Color.Blue);
 
             _spriteBatch.End();
 
