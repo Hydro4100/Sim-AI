@@ -9,11 +9,12 @@ namespace MainQuest1_ClosestToTen
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private Rectangle _rectangle;
         private Rectangle _redRectangle;
         private Rectangle _blueRectangle;
         private Texture2D _whitePixelTexture;
-        private Texture2D _redPixelTexture;
-        private Texture2D _bluePixelTexture;
+
+        private Texture2D _monogameLogoTexture;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -33,12 +34,21 @@ namespace MainQuest1_ClosestToTen
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here 
+            _monogameLogoTexture = Content.Load<Texture2D>("monogame");
+
             int rectangleWidth = 200;
             int rectangleHeight = 100;
+            int logoWidth = _monogameLogoTexture.Width;
+            int logoHeight = _monogameLogoTexture.Height;
             int redX = 0;
             int redY = GraphicsDevice.Viewport.Height - rectangleHeight;
             int blueX = GraphicsDevice.Viewport.Width - rectangleWidth;
             int blueY = GraphicsDevice.Viewport.Height - rectangleHeight;
+
+            int x = (GraphicsDevice.Viewport.Width - logoWidth) / 2;
+            int y = (GraphicsDevice.Viewport.Height - logoHeight) / 2;
+
+            _rectangle = new Rectangle(x, y, logoWidth, logoHeight);
 
             _redRectangle = new Rectangle(redX, redY, rectangleWidth, rectangleHeight);
             _blueRectangle = new Rectangle(blueX, blueY, rectangleWidth, rectangleHeight);
@@ -66,6 +76,8 @@ namespace MainQuest1_ClosestToTen
 
             _spriteBatch.Draw(_whitePixelTexture, _redRectangle, Color.Red);
             _spriteBatch.Draw(_whitePixelTexture, _blueRectangle, Color.Blue);
+
+            _spriteBatch.Draw(_monogameLogoTexture, _rectangle, Color.White);
 
             _spriteBatch.End();
 
