@@ -18,6 +18,7 @@ namespace MainQuest1_ClosestToTen
         private Texture2D _studioLogo;
 
         private float _timeRemaining = 1f;
+        private float _score = 0;
         private SpriteFont _timerFont;
 
         enum Screen { FlashScreen, TitleScreen, CreditsScreen, GameScreen, PauseScreen, GameOverScreen };
@@ -104,12 +105,20 @@ namespace MainQuest1_ClosestToTen
                     }
                     break;
                 case Screen.GameScreen:
+                    _timeRemaining += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (Keyboard.GetState().IsKeyDown(Keys.P))
                     {
                         _screen = Screen.PauseScreen;
                     }
-                    else if (_redRectangle.Contains(Mouse.GetState().Position)&& Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    else if (_redRectangle.Contains(Mouse.GetState().Position) && Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
+                        _score = _timeRemaining * 100f;
+                        _screen = Screen.GameOverScreen;
+                        _timeRemaining = 2f; // YUCK!
+                    }
+                    else if (_timeRemaining >= 10f)
+                    {
+                        _score = 0f;
                         _screen = Screen.GameOverScreen;
                         _timeRemaining = 2f; // YUCK!
                     }
@@ -183,8 +192,9 @@ namespace MainQuest1_ClosestToTen
                     break;
                 case Screen.GameOverScreen:
                     _spriteBatch.Begin();
-                    textPosition = new Vector2(10, 10);
-                    _spriteBatch.DrawString(_timerFont, "GameOver", textPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
+                    string gameOverText = $"Game Over!\nYour score: {_score}";
+                    textPosition = new Vector2((_graphics.GraphicsDevice.Viewport.Width - _timerFont.MeasureString(gameOverText).X) / 2, (_graphics.GraphicsDevice.Viewport.Height - _timerFont.MeasureString(gameOverText).Y) / 2);
+                    _spriteBatch.DrawString(_timerFont, gameOverText, textPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
                     _spriteBatch.End();
                     break;
             }
