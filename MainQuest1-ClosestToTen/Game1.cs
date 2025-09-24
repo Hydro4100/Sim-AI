@@ -11,7 +11,7 @@ namespace MainQuest1_ClosestToTen
 
         private Rectangle _rectangle;
         private Rectangle _redRectangle;
-        private Rectangle _blueRectangle;
+        private Rectangle _blackRectangle;
         private Texture2D _whitePixelTexture;
 
         private Texture2D _monogameLogoTexture;
@@ -45,22 +45,24 @@ namespace MainQuest1_ClosestToTen
             _monogameLogoTexture = Content.Load<Texture2D>("monogame");
             _studioLogo = Content.Load<Texture2D>("logo");
 
-            int rectangleWidth = 200;
-            int rectangleHeight = 100;
+            int redRectangleWidth = 200;
+            int redRectangleHeight = 100;
+            int blackRectangleWidth = 220;
+            int blackRectangleHeight = 120;
             int logoWidth = _monogameLogoTexture.Width;
             int logoHeight = _monogameLogoTexture.Height;
-            int redX = 0;
-            int redY = GraphicsDevice.Viewport.Height - rectangleHeight;
-            int blueX = GraphicsDevice.Viewport.Width - rectangleWidth;
-            int blueY = GraphicsDevice.Viewport.Height - rectangleHeight;
+            int redX = (GraphicsDevice.Viewport.Width - redRectangleWidth) / 2;
+            int redY = (GraphicsDevice.Viewport.Height - redRectangleHeight) / 2;
+            int blueX = (GraphicsDevice.Viewport.Width - blackRectangleWidth) / 2;
+            int blueY = (GraphicsDevice.Viewport.Height - blackRectangleHeight) / 2;
 
             int x = (GraphicsDevice.Viewport.Width - logoWidth) / 2;
             int y = (GraphicsDevice.Viewport.Height - logoHeight) / 2;
 
             _rectangle = new Rectangle(x, y, logoWidth, logoHeight);
 
-            _redRectangle = new Rectangle(redX, redY, rectangleWidth, rectangleHeight);
-            _blueRectangle = new Rectangle(blueX, blueY, rectangleWidth, rectangleHeight);
+            _redRectangle = new Rectangle(redX, redY, redRectangleWidth, redRectangleHeight);
+            _blackRectangle = new Rectangle(blueX, blueY, blackRectangleWidth, blackRectangleHeight);
 
             _whitePixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             _whitePixelTexture.SetData(new Color[] { Color.White });
@@ -75,13 +77,6 @@ namespace MainQuest1_ClosestToTen
 
             // TODO: Add your update logic here
             float secondsPassed = gameTime.ElapsedGameTime.Milliseconds / 1000f;
-
-            //_timeRemaining -= secondsPassed;
-            
-            //if (_timeRemaining < 0)
-            //{
-            //    _timeRemaining = 0;
-            //}
 
             switch (_screen)
             {
@@ -113,10 +108,10 @@ namespace MainQuest1_ClosestToTen
                     {
                         _screen = Screen.PauseScreen;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.O))
+                    else if (_redRectangle.Contains(Mouse.GetState().Position)&& Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
-                        _timeRemaining = 2f;
                         _screen = Screen.GameOverScreen;
+                        _timeRemaining = 2f; // YUCK!
                     }
                     break;
                 case Screen.PauseScreen:
@@ -142,22 +137,6 @@ namespace MainQuest1_ClosestToTen
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            //_spriteBatch.Begin();
-
-            //_spriteBatch.Draw(_whitePixelTexture, _redRectangle, Color.Red);
-            //_spriteBatch.Draw(_whitePixelTexture, _blueRectangle, Color.Blue);
-
-            //_spriteBatch.Draw(_monogameLogoTexture, _rectangle, Color.White);
-
-            //Vector2 timerSize = _timerFont.MeasureString(_timeRemaining.ToString());
-
-            //Vector2 timerPosition = new Vector2(_graphics.GraphicsDevice.Viewport.Width - _timerFont.MeasureString(_timeRemaining.ToString("0.0")).X - 10, 10);
-
-            //_spriteBatch.DrawString(_timerFont, _timeRemaining.ToString("0.0"), timerPosition + new Vector2(2, 2), new Color(242f / 255, 70f / 255, 80f / 255, 1f));
-            //_spriteBatch.DrawString(_timerFont, _timeRemaining.ToString("0.0"), timerPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
-
-            //_spriteBatch.End();
-
             Vector2 textPosition;
 
             switch (_screen)
@@ -166,11 +145,6 @@ namespace MainQuest1_ClosestToTen
                     _spriteBatch.Begin();
 
                     _spriteBatch.Draw(_studioLogo, _rectangle, Color.White);
-
-                    Vector2 timerPosition = new Vector2(_graphics.GraphicsDevice.Viewport.Width - _timerFont.MeasureString(_timeRemaining.ToString("0.0")).X - 10, 10);
-
-                    _spriteBatch.DrawString(_timerFont, _timeRemaining.ToString("0.0"), timerPosition + new Vector2(2, 2), new Color(242f / 255, 70f / 255, 80f / 255, 1f));
-                    _spriteBatch.DrawString(_timerFont, _timeRemaining.ToString("0.0"), timerPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
 
                     _spriteBatch.End();
                     break;
@@ -188,8 +162,17 @@ namespace MainQuest1_ClosestToTen
                     break;
                 case Screen.GameScreen:
                     _spriteBatch.Begin();
-                    textPosition = new Vector2(10, 10);
-                    _spriteBatch.DrawString(_timerFont, "Game", textPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
+
+                    _spriteBatch.Draw(_whitePixelTexture, _blackRectangle, Color.Black);
+                    _spriteBatch.Draw(_whitePixelTexture, _redRectangle, Color.Red);
+
+                    //Vector2 timerSize = _timerFont.MeasureString(_timeRemaining.ToString());
+
+                    Vector2 timerPosition = new Vector2((_graphics.GraphicsDevice.Viewport.Width - _timerFont.MeasureString(_timeRemaining.ToString("0.0")).X) / 2, (_graphics.GraphicsDevice.Viewport.Height - _timerFont.MeasureString(_timeRemaining.ToString("0.0")).Y) / 2);
+
+                    _spriteBatch.DrawString(_timerFont, _timeRemaining.ToString("0.0"), timerPosition + new Vector2(2, 2), new Color(242f / 255, 70f / 255, 80f / 255, 1f));
+                    _spriteBatch.DrawString(_timerFont, _timeRemaining.ToString("0.0"), timerPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
+
                     _spriteBatch.End();
                     break;
                 case Screen.PauseScreen:
