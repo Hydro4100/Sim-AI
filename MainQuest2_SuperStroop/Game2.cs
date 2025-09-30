@@ -15,7 +15,11 @@ namespace MainQuest2_SuperStroop
 
         private StroopShape[] _shapes;
 
-    public Game2()
+        private SpriteFont _displayFont;
+        private string _displayText = "Hello, Super Stroop!";
+        private Color _displayColour = Color.White;
+
+        public Game2()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -40,6 +44,7 @@ namespace MainQuest2_SuperStroop
 
             _circleTexture = Content.Load<Texture2D>("circle");
             _triangleTexture = Content.Load<Texture2D>("triangle");
+            _displayFont = Content.Load<SpriteFont>("displayFont");
 
             _shapes = new StroopShape[]
             {
@@ -65,6 +70,8 @@ namespace MainQuest2_SuperStroop
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
+
+            _spriteBatch.DrawString(_displayFont, _displayText, new Vector2((_graphics.GraphicsDevice.Viewport.Width - _displayFont.MeasureString(_displayText).X) / 2, 10), _displayColour);
 
             foreach (var shape in _shapes)
             {
