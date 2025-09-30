@@ -1,2 +1,2 @@
-﻿using var game = new MainQuest2_SuperStroop.Game1();
+﻿using var game = new MainQuest2_SuperStroop.Game2();
 game.Run();

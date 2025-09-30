@@ -4,12 +4,16 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MainQuest2_SuperStroop
 {
-    public class Game1 : Game
+    public class Game2 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public Game1()
+        private Rectangle _rectangle;
+        private 
+        private Rectangle _rectangle;
+
+        public Game2()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

@@ -159,14 +159,14 @@ namespace MainQuest1_ClosestToTen
                     break;
                 case Screen.TitleScreen:
                     _spriteBatch.Begin();
-                    textPosition = new Vector2(10, 10);
-                    _spriteBatch.DrawString(_timerFont, "Title", textPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
+                    string _titleText = "Closest to Ten\n\nSPACE to start...\nC for credits...";
+                    _spriteBatch.DrawString(_timerFont, _titleText, new Vector2((_graphics.GraphicsDevice.Viewport.Width - _timerFont.MeasureString(_titleText).X) / 2, (_graphics.GraphicsDevice.Viewport.Height - _timerFont.MeasureString(_titleText).Y) / 2), new Color(252f / 255, 234f / 255, 51f / 255, 1f));
                     _spriteBatch.End();
                     break;
                 case Screen.CreditsScreen:
                     _spriteBatch.Begin();
-                    textPosition = new Vector2(10, 10);
-                    _spriteBatch.DrawString(_timerFont, "Credits", textPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
+                    string _creditsText = "Created by:\nBen Trewick";
+                    _spriteBatch.DrawString(_timerFont, _creditsText, new Vector2((_graphics.GraphicsDevice.Viewport.Width - _timerFont.MeasureString(_creditsText).X) / 2, (_graphics.GraphicsDevice.Viewport.Height - _timerFont.MeasureString(_creditsText).Y) / 2), new Color(252f / 255, 234f / 255, 51f / 255, 1f));
                     _spriteBatch.End();
                     break;
                 case Screen.GameScreen:
@@ -192,7 +192,7 @@ namespace MainQuest1_ClosestToTen
                     break;
                 case Screen.GameOverScreen:
                     _spriteBatch.Begin();
-                    string gameOverText = $"Game Over!\nYour score: {_score}";
+                    string gameOverText = $"Game Over!\nYour score: {(int)_score}";
                     textPosition = new Vector2((_graphics.GraphicsDevice.Viewport.Width - _timerFont.MeasureString(gameOverText).X) / 2, (_graphics.GraphicsDevice.Viewport.Height - _timerFont.MeasureString(gameOverText).Y) / 2);
                     _spriteBatch.DrawString(_timerFont, gameOverText, textPosition, new Color(252f / 255, 234f / 255, 51f / 255, 1f));
                     _spriteBatch.End();
