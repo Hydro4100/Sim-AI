@@ -60,6 +60,16 @@ namespace MainQuest2_SuperStroop
                 Exit();
 
             // TODO: Add your update logic here
+            _displayColour = Color.White;
+            _displayText = "Mouse over nothing";
+            foreach (StroopShape shape in _shapes)
+            {
+                if (shape.IsInside(Mouse.GetState().Position))
+                {
+                    //_displayColour = shape.Colour;
+                    _displayText = $"Mouse over the {shape.ToString()}";
+                }
+            }
 
             base.Update(gameTime);
         }
