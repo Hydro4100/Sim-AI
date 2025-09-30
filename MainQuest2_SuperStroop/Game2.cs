@@ -9,15 +9,13 @@ namespace MainQuest2_SuperStroop
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Rectangle _rectangle;
-        private Rectangle _circle;
-        private Rectangle _triangle;
-
         private Texture2D _rectangleTexture;
         private Texture2D _circleTexture;
         private Texture2D _triangleTexture;
 
-        public Game2()
+        private StroopShape[] _shapes;
+
+    public Game2()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -42,6 +40,13 @@ namespace MainQuest2_SuperStroop
 
             _circleTexture = Content.Load<Texture2D>("circle");
             _triangleTexture = Content.Load<Texture2D>("triangle");
+
+            _shapes = new StroopShape[]
+            {
+                new StroopShape(new Rectangle(80, 70, 70, 70), Color.Red, _circleTexture),
+                new StroopShape(new Rectangle(170, 70, 80, 80), Color.Green, _triangleTexture),
+                new StroopShape(new Rectangle(130, 170, 60, 60), Color.Blue, _rectangleTexture),
+            };
         }
 
         protected override void Update(GameTime gameTime)
@@ -61,9 +66,10 @@ namespace MainQuest2_SuperStroop
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(_rectangleTexture, new Rectangle(100, 100, 30, 30), Color.Red);
-            _spriteBatch.Draw(_circleTexture, new Rectangle(150, 100, 30, 30), Color.Yellow);
-            _spriteBatch.Draw(_triangleTexture, new Rectangle(200, 100, 30, 30), Color.Green);
+            foreach (var shape in _shapes)
+            {
+                shape.Draw(_spriteBatch);
+            }
 
             _spriteBatch.End();
 
