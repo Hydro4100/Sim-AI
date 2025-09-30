@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainQuest1-ClosestToTen", "MainQuest1-ClosestToTen\MainQuest1-ClosestToTen.csproj", "{A25B519A-5C31-4F86-9036-57D1B06CA85A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainQuest2_SuperStroop", "MainQuest2_SuperStroop\MainQuest2_SuperStroop.csproj", "{B02BC252-C55A-4DD0-92FE-75B21FFAEE4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A25B519A-5C31-4F86-9036-57D1B06CA85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A25B519A-5C31-4F86-9036-57D1B06CA85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A25B519A-5C31-4F86-9036-57D1B06CA85A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B02BC252-C55A-4DD0-92FE-75B21FFAEE4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B02BC252-C55A-4DD0-92FE-75B21FFAEE4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B02BC252-C55A-4DD0-92FE-75B21FFAEE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B02BC252-C55A-4DD0-92FE-75B21FFAEE4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
