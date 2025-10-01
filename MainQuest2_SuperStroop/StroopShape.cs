@@ -35,5 +35,13 @@ namespace MainQuest2_SuperStroop
         {
             return $"{_colour} {_texture}";
         }
+
+        public Color Colour
+        {
+            get
+            {
+                return _colour;
+            }
+        }
     }
 }

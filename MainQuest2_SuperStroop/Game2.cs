@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace MainQuest2_SuperStroop
 {
@@ -41,6 +42,7 @@ namespace MainQuest2_SuperStroop
 
             _rectangleTexture = new Texture2D(GraphicsDevice, 1, 1);
             _rectangleTexture.SetData(new Color[] { Color.White });
+            _rectangleTexture.Name = "rectangle";
 
             _circleTexture = Content.Load<Texture2D>("circle");
             _triangleTexture = Content.Load<Texture2D>("triangle");
@@ -66,7 +68,7 @@ namespace MainQuest2_SuperStroop
             {
                 if (shape.IsInside(Mouse.GetState().Position))
                 {
-                    //_displayColour = shape.Colour;
+                    _displayColour = shape.Colour;
                     _displayText = $"Mouse over the {shape.ToString()}";
                 }
             }
