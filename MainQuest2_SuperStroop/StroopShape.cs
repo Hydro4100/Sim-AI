@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MainQuest2_SuperStroop
 {
-    public class StroopShape
+    public abstract class StroopShape
     {
         private Color _colour;
         private Rectangle _rectangle;
@@ -26,10 +26,7 @@ namespace MainQuest2_SuperStroop
             spriteBatch.Draw(_texture, _rectangle, _colour);
         }
 
-        public bool IsInside(Point point)
-        {
-            return _rectangle.Contains(point);
-        }
+        public abstract bool IsInside(Point point);
 
         public override string ToString()
         {
