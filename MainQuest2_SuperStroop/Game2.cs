@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace MainQuest2_SuperStroop
 {
@@ -15,10 +14,13 @@ namespace MainQuest2_SuperStroop
         private Texture2D _triangleTexture;
 
         private StroopShape[] _shapes;
+        private Color[] _colours;
 
         private SpriteFont _displayFont;
         private string _displayText = "Hello, Super Stroop!";
         private Color _displayColour = Color.White;
+
+        private ShapeRequester _shapeRequester;
 
         public Game2()
         {
@@ -54,6 +56,14 @@ namespace MainQuest2_SuperStroop
                 new StroopTriangle(new Rectangle(170, 70, 80, 80), Color.Green, _triangleTexture),
                 new StroopSquare(new Rectangle(130, 170, 60, 60), Color.Blue, _rectangleTexture),
             };
+
+            _colours = new Color[]
+            {
+                Color.Aqua, Color.Beige, Color.Black, Color.Blue, Color.Brown, Color.Crimson, Color.DarkGray, Color.Gray, Color.Green, Color.LightBlue, Color.LightGray, Color.LimeGreen, Color.Magenta, Color.Orange, Color.Pink, Color.Purple, Color.Red, Color.White, Color.Yellow
+            };
+
+            _shapeRequester = new ShapeRequester(_shapes, _colours);
+            _shapeRequester.GetNewRequest();
         }
 
         protected override void Update(GameTime gameTime)
@@ -63,7 +73,7 @@ namespace MainQuest2_SuperStroop
 
             // TODO: Add your update logic here
             _displayColour = Color.White;
-            _displayText = "Mouse over nothing";
+            _displayText = $"{_shapeRequester.Colour} {_shapeRequester.StroopShape}";
             foreach (StroopShape shape in _shapes)
             {
                 if (shape.IsInside(Mouse.GetState().Position))

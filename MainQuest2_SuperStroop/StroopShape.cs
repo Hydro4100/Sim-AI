@@ -1,10 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MainQuest2_SuperStroop
 {
@@ -30,7 +25,7 @@ namespace MainQuest2_SuperStroop
 
         public override string ToString()
         {
-            return $"{_colour} {_texture}";
+            return $"{_texture}";
         }
 
         public Color Colour
