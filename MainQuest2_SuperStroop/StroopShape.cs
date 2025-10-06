@@ -11,7 +11,7 @@ namespace MainQuest2_SuperStroop
     public abstract class StroopShape
     {
         private Color _colour;
-        private Rectangle _rectangle;
+        protected Rectangle _rectangle;
         private Texture2D _texture;
 
         public StroopShape(Rectangle rectangle, Color colour, Texture2D texture)

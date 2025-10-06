@@ -50,9 +50,9 @@ namespace MainQuest2_SuperStroop
 
             _shapes = new StroopShape[]
             {
-                new StroopShape(new Rectangle(80, 70, 70, 70), Color.Red, _circleTexture),
-                new StroopShape(new Rectangle(170, 70, 80, 80), Color.Green, _triangleTexture),
-                new StroopShape(new Rectangle(130, 170, 60, 60), Color.Blue, _rectangleTexture),
+                new StroopCircle(new Rectangle(80, 70, 70, 70), Color.Red, _circleTexture),
+                new StroopTriangle(new Rectangle(170, 70, 80, 80), Color.Green, _triangleTexture),
+                new StroopSquare(new Rectangle(130, 170, 60, 60), Color.Blue, _rectangleTexture),
             };
         }
 

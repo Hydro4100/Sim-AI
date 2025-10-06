@@ -10,7 +10,6 @@ namespace MainQuest2_SuperStroop
 {
     internal class StroopSquare : StroopShape
     {
-        private Rectangle _rectangle;
         public StroopSquare(Rectangle rectangle, Color colour, Texture2D texture) : base(rectangle, colour, texture)
         {
 
