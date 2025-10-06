@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MainQuest2_SuperStroop
 {
@@ -17,7 +13,8 @@ namespace MainQuest2_SuperStroop
 
         public override bool IsInside(Point point)
         {
-            return false;
-        }        
+            float radius = _rectangle.Width / 2;
+            return MathF.Pow(point.X - (_rectangle.X + radius), 2) + MathF.Pow(point.Y - (_rectangle.Y + radius), 2) <= MathF.Pow(radius, 2);
+        }
     }
 }
