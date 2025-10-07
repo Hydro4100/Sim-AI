@@ -17,23 +17,20 @@ namespace MainQuest2_SuperStroop
 
         private static Random random = new Random();
 
-        public StroopShape(Game game, Rectangle rectangle, Color colour, Texture2D texture):base(game)
+        public StroopShape(Game game, Color colour, Texture2D texture):base(game)
         {
-            _rectangle = rectangle;
-            _colour = colour;
-            _texture = texture;
-
-            _startPosition = new Vector2(rectangle.X, rectangle.Y);
-            _endPosition = new Vector2(rectangle.X + Game.GraphicsDevice.Viewport.Width - 2 * rectangle.X, rectangle.Y);
-            _elapsedTime = 0f;
-            _movementDuration = 5f;
-
             int size = random.Next(50, 100);
             _startPosition = new Vector2(random.Next(size, game.GraphicsDevice.Viewport.Width - size), random.Next(size, game.GraphicsDevice.Viewport.Height - size));
             _endPosition = new Vector2(random.Next(size, game.GraphicsDevice.Viewport.Width - size), random.Next(size, game.GraphicsDevice.Viewport.Height - size));
             _rectangle = new Rectangle((int)_startPosition.X, (int)_startPosition.Y, size, size);
             _elapsedTime = 0f;
             _movementDuration = 2f + 3 * random.NextSingle();
+
+            _colour = colour;
+            _texture = texture;
+
+            _elapsedTime = 0f;
+            _movementDuration = 5f;
         }
 
         public void Draw(SpriteBatch spriteBatch)
