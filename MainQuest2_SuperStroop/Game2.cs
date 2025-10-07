@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -34,6 +35,8 @@ namespace MainQuest2_SuperStroop
 
         private int _lives = 3;
         private int _score = 0;
+        private float _time = 3.5f;
+        private float _timeRemaining = 3.5f;
 
         public Game2()
         {
@@ -94,7 +97,7 @@ namespace MainQuest2_SuperStroop
                 Exit();
 
             _displayColour = _shapeRequester.DisplayColour;
-            _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape}";
+            _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape} {MathF.Round(_timeRemaining)}";
             _livesText = $"{_lives} Lives";
             _scoreText = $"{_score} Points";
 
@@ -104,16 +107,20 @@ namespace MainQuest2_SuperStroop
                 {
                     if (_mouseClicked)
                     {
-                        if (shape != _shapeRequester.StroopShape)
+                        if (shape == _shapeRequester.StroopShape)
                         {
-                            _lives --;
-                            _shapeRequester.GetNewRequest() ;
+                            Correct();
                             continue;
                         }
-                        _score += 100;
-                        _shapeRequester.GetNewRequest();
+                        Fail();
                     }
                 }
+            }
+
+            _timeRemaining -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (_timeRemaining <= 0)
+            {
+                Fail();
             }
 
             base.Update(gameTime);
@@ -138,6 +145,25 @@ namespace MainQuest2_SuperStroop
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        protected void Correct()
+        {
+            _score += 100;
+            _time++;
+            Reset();
+        }
+
+        protected void Fail()
+        {
+            _lives--;
+            Reset();
+        }
+
+        protected void Reset()
+        {
+            _timeRemaining = _time;
+            _shapeRequester.GetNewRequest();
         }
     }
 }
