@@ -3,13 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MainQuest2_SuperStroop
 {
-    public abstract class StroopShape
+    public abstract class StroopShape : GameComponent
     {
         private Color _colour;
         protected Rectangle _rectangle;
         private Texture2D _texture;
 
-        public StroopShape(Rectangle rectangle, Color colour, Texture2D texture)
+        public StroopShape(Game game, Rectangle rectangle, Color colour, Texture2D texture):base(game)
         {
             _rectangle = rectangle;
             _colour = colour;

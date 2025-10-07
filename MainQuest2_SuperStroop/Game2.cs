@@ -68,9 +68,9 @@ namespace MainQuest2_SuperStroop
 
             _shapes = new StroopShape[]
             {
-                new StroopCircle(new Rectangle(80, 70, 70, 70), Color.Red, _circleTexture),
-                new StroopTriangle(new Rectangle(170, 70, 80, 80), Color.Green, _triangleTexture),
-                new StroopSquare(new Rectangle(130, 170, 60, 60), Color.Blue, _rectangleTexture),
+                new StroopCircle(this, new Rectangle(80, 70, 70, 70), Color.Red, _circleTexture),
+                new StroopTriangle(this, new Rectangle(170, 70, 80, 80), Color.Green, _triangleTexture),
+                new StroopSquare(this, new Rectangle(130, 170, 60, 60), Color.Blue, _rectangleTexture),
             };
 
             _colours = new Color[]
@@ -85,6 +85,11 @@ namespace MainQuest2_SuperStroop
 
             _shapeRequester = new ShapeRequester(_shapes, _colours, _colourNames);
             _shapeRequester.GetNewRequest();
+            
+            foreach (StroopShape shape in _shapes)
+            {
+                Components.Add(shape);
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -97,7 +102,7 @@ namespace MainQuest2_SuperStroop
                 Exit();
 
             _displayColour = _shapeRequester.DisplayColour;
-            _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape} {MathF.Round(_timeRemaining)}";
+            _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape} {MathF.Round(_timeRemaining, 1)}";
             _livesText = $"{_lives} Lives";
             _scoreText = $"{_score} Points";
 

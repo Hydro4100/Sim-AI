@@ -10,7 +10,6 @@ namespace MainQuest2_SuperStroop
         private StroopShape[] _shapes;
         private string[] _colourNames;
         private Random _random = new Random();
-        private int _shapeIndex;
 
         private Color _colour;
         private StroopShape _shape;
