@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace MainQuest2_SuperStroop
 {
@@ -17,15 +18,20 @@ namespace MainQuest2_SuperStroop
 
         private StroopShape[] _shapes;
         private Color[] _colours;
+        private string[] _colourNames;
 
         private SpriteFont _displayFont;
         private string _displayText = "Hello, Super Stroop!";
         private Color _displayColour = Color.White;
+        private string _livesText;
+        private Color _livesColour = Color.White;
 
         private ShapeRequester _shapeRequester;
 
         private bool _mouseClicked = false;
         private MouseState ms = new MouseState(), oms;
+
+        private int _lives;
 
         public Game2()
         {
@@ -67,7 +73,12 @@ namespace MainQuest2_SuperStroop
                 Color.Aqua, Color.Beige, Color.Black, Color.Blue, Color.Brown, Color.Crimson, Color.DarkGray, Color.Gray, Color.Green, Color.LightBlue, Color.LightGray, Color.LimeGreen, Color.Magenta, Color.Orange, Color.Pink, Color.Purple, Color.Red, Color.White, Color.Yellow
             };
 
-            _shapeRequester = new ShapeRequester(_shapes, _colours);
+            _colourNames = new string[]
+            {
+                "Aqua", "Beige", "Black", "Blue", "Brown", "Crimson", "Dark Gray", "Gray", "Green", "Light Blue", "Light Gray", "Lime", "Magenta", "Orange", "Pink", "Purple", "Red", "White", "Yellow"
+            };
+
+            _shapeRequester = new ShapeRequester(_shapes, _colours, _colourNames);
             _shapeRequester.GetNewRequest();
         }
 
@@ -81,8 +92,9 @@ namespace MainQuest2_SuperStroop
                 Exit();
 
             // TODO: Add your update logic here
-            _displayColour = Color.White;
-            _displayText = $"{_shapeRequester.Colour} {_shapeRequester.StroopShape}";
+            //_displayColour = Color.White;
+            _displayColour = _shapeRequester.Colour;
+            _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape}";
             foreach (StroopShape shape in _shapes)
             {
                 if (shape.IsInside(Mouse.GetState().Position))
