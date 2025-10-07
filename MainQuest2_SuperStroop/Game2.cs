@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Diagnostics;
 
 namespace MainQuest2_SuperStroop
 {
@@ -21,6 +23,9 @@ namespace MainQuest2_SuperStroop
         private Color _displayColour = Color.White;
 
         private ShapeRequester _shapeRequester;
+
+        private bool _mouseClicked = false;
+        private MouseState ms = new MouseState(), oms;
 
         public Game2()
         {
@@ -68,6 +73,10 @@ namespace MainQuest2_SuperStroop
 
         protected override void Update(GameTime gameTime)
         {
+            oms = ms;
+            ms = Mouse.GetState();
+            _mouseClicked = ms.LeftButton != ButtonState.Pressed && oms.LeftButton == ButtonState.Pressed;
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -80,6 +89,11 @@ namespace MainQuest2_SuperStroop
                 {
                     _displayColour = shape.Colour;
                     _displayText = $"Mouse over the {shape.ToString()}";
+
+                    if (_mouseClicked)
+                    {
+                        Click();
+                    }
                 }
             }
 
@@ -103,6 +117,11 @@ namespace MainQuest2_SuperStroop
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void Click()
+        {
+            Debug.WriteLine("clicked!");
         }
     }
 }
