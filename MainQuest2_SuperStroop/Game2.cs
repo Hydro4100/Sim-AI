@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 
 namespace MainQuest2_SuperStroop
 {
@@ -87,7 +84,7 @@ namespace MainQuest2_SuperStroop
 
             _shapeRequester = new ShapeRequester(_shapes, _colours, _colourNames);
             _shapeRequester.GetNewRequest();
-            
+
             foreach (StroopShape shape in _shapes)
             {
                 Components.Add(shape);
@@ -107,6 +104,7 @@ namespace MainQuest2_SuperStroop
             _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape} {MathF.Round(_timeRemaining, 1)}";
             _livesText = $"{_lives} Lives";
             _scoreText = $"{_score} Points";
+            _displayText = MGGameLibrary.MyGame.helloLibrary;
 
             foreach (StroopShape shape in _shapes)
             {
