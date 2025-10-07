@@ -9,11 +9,21 @@ namespace MainQuest2_SuperStroop
         protected Rectangle _rectangle;
         private Texture2D _texture;
 
+        private Vector2 _startPosition;
+        private Vector2 _endPosition;
+        private float _movementDuration;
+        private float _elapsedTime;
+
         public StroopShape(Game game, Rectangle rectangle, Color colour, Texture2D texture):base(game)
         {
             _rectangle = rectangle;
             _colour = colour;
             _texture = texture;
+
+            _startPosition = new Vector2(rectangle.X, rectangle.Y);
+            _endPosition = new Vector2(rectangle.X + Game.GraphicsDevice.Viewport.Width - 2 * rectangle.X, rectangle.Y);
+            _elapsedTime = 0f;
+            _movementDuration = 5f;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -34,6 +44,19 @@ namespace MainQuest2_SuperStroop
             {
                 return _colour;
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            _elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            float t = MathHelper.Clamp(_elapsedTime / _movementDuration, 0f, 1f);
+
+            Vector2 newPosition = (1 - t) * _startPosition + t * _endPosition;
+            _rectangle.X = (int)newPosition.X;
+            _rectangle.Y = (int)newPosition.Y;
+
+            base.Update(gameTime);
         }
     }
 }

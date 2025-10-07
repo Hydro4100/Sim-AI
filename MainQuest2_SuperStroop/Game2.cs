@@ -60,7 +60,7 @@ namespace MainQuest2_SuperStroop
 
             _rectangleTexture = new Texture2D(GraphicsDevice, 1, 1);
             _rectangleTexture.SetData(new Color[] { Color.White });
-            _rectangleTexture.Name = "rectangle";
+            _rectangleTexture.Name = "square";
 
             _circleTexture = Content.Load<Texture2D>("circle");
             _triangleTexture = Content.Load<Texture2D>("triangle");
@@ -68,9 +68,9 @@ namespace MainQuest2_SuperStroop
 
             _shapes = new StroopShape[]
             {
-                new StroopCircle(this, new Rectangle(80, 70, 70, 70), Color.Red, _circleTexture),
-                new StroopTriangle(this, new Rectangle(170, 70, 80, 80), Color.Green, _triangleTexture),
-                new StroopSquare(this, new Rectangle(130, 170, 60, 60), Color.Blue, _rectangleTexture),
+                new StroopCircle(this, new Rectangle(70, 110, 50, 50), Color.Red, _circleTexture),
+                new StroopTriangle(this, new Rectangle(70, 190, 50, 50), Color.Green, _triangleTexture),
+                new StroopSquare(this, new Rectangle(70, 270, 50, 50), Color.Blue, _rectangleTexture),
             };
 
             _colours = new Color[]
