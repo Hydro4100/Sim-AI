@@ -23,8 +23,9 @@ namespace MainQuest2_SuperStroop
         private SpriteFont _displayFont;
         private string _displayText = "Hello, Super Stroop!";
         private Color _displayColour = Color.White;
+        private Color _textColour = Color.White;
         private string _livesText;
-        private Color _livesColour = Color.White;
+        private string _scoreText;
 
         private ShapeRequester _shapeRequester;
 
@@ -32,6 +33,7 @@ namespace MainQuest2_SuperStroop
         private MouseState ms = new MouseState(), oms;
 
         private int _lives = 3;
+        private int _score = 0;
 
         public Game2()
         {
@@ -91,9 +93,10 @@ namespace MainQuest2_SuperStroop
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _displayColour = _shapeRequester.Colour;
+            _displayColour = _shapeRequester.DisplayColour;
             _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape}";
             _livesText = $"{_lives} Lives";
+            _scoreText = $"{_score} Points";
 
             foreach (StroopShape shape in _shapes)
             {
@@ -107,7 +110,8 @@ namespace MainQuest2_SuperStroop
                             _shapeRequester.GetNewRequest() ;
                             continue;
                         }
-                        
+                        _score += 100;
+                        _shapeRequester.GetNewRequest();
                     }
                 }
             }
@@ -123,7 +127,8 @@ namespace MainQuest2_SuperStroop
             _spriteBatch.Begin();
 
             _spriteBatch.DrawString(_displayFont, _displayText, new Vector2((_graphics.GraphicsDevice.Viewport.Width - _displayFont.MeasureString(_displayText).X) / 2, 10), _displayColour);
-            _spriteBatch.DrawString(_displayFont, _livesText, new Vector2(10, 10), _livesColour);
+            _spriteBatch.DrawString(_displayFont, _livesText, new Vector2(10, 10), _textColour);
+            _spriteBatch.DrawString(_displayFont, _scoreText, new Vector2(_graphics.GraphicsDevice.Viewport.Width - _displayFont.MeasureString(_scoreText).X - 10, 10), _textColour);
 
             foreach (var shape in _shapes)
             {

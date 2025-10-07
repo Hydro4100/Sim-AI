@@ -15,6 +15,7 @@ namespace MainQuest2_SuperStroop
         private Color _colour;
         private StroopShape _shape;
         private string _colourName;
+        private Color _displayColour;
 
         public ShapeRequester(StroopShape[] shapes, Color[] colours, string[] colourNames)
         {
@@ -25,10 +26,11 @@ namespace MainQuest2_SuperStroop
 
         public void GetNewRequest()
         {
-            _colour = _colours[_random.Next(_colours.Length)];
-            int index = _random.Next(_shapes.Length);
-            _shape = _shapes[index];
+            int index = _random.Next(_colours.Length);
+            _colour = _colours[index];
             _colourName = _colourNames[index];
+            _displayColour = _colours[_random.Next(_colourNames.Length)];
+            _shape = _shapes[_random.Next(_shapes.Length)];
         }
 
         public Color Colour
@@ -52,6 +54,14 @@ namespace MainQuest2_SuperStroop
             get
             {
                 return _colourName;
+            }
+        }
+
+        public Color DisplayColour
+        {
+            get
+            {
+                return _displayColour;
             }
         }
     }
