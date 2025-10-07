@@ -57,6 +57,12 @@ namespace MainQuest2_SuperStroop
             _rectangle.X = (int)newPosition.X;
             _rectangle.Y = (int)newPosition.Y;
 
+            if (t >= 1f)
+            {
+                (_startPosition, _endPosition) = (_endPosition, _startPosition);
+                _elapsedTime = 0f;
+            }
+
             base.Update(gameTime);
         }
     }
