@@ -26,10 +26,17 @@ namespace MainQuest2_SuperStroop
         public void GetNewRequest()
         {
             int index = _random.Next(_colours.Length);
-            _colour = _colours[index];
-            _colourName = _colourNames[index];
-            _displayColour = _colours[_random.Next(_colourNames.Length)];
             _shape = _shapes[_random.Next(_shapes.Length)];
+            _colour = _shape.Colour;
+            for (int i = 0; i < _colours.Length; i++)
+            {
+                if (_colours[i] == _shape.Colour)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            _colourName = _colourNames[index];
         }
 
         public Color Colour
@@ -53,14 +60,6 @@ namespace MainQuest2_SuperStroop
             get
             {
                 return _colourName;
-            }
-        }
-
-        public Color DisplayColour
-        {
-            get
-            {
-                return _displayColour;
             }
         }
     }

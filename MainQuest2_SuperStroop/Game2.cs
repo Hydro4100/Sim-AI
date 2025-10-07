@@ -38,6 +38,8 @@ namespace MainQuest2_SuperStroop
         private float _time = 3.5f;
         private float _timeRemaining = 3.5f;
 
+        private static Random _random = new Random();
+
         public Game2()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -66,13 +68,6 @@ namespace MainQuest2_SuperStroop
             _triangleTexture = Content.Load<Texture2D>("triangle");
             _displayFont = Content.Load<SpriteFont>("displayFont");
 
-            _shapes = new StroopShape[]
-            {
-                new StroopCircle(this, Color.Red, _circleTexture),
-                new StroopTriangle(this, Color.Green, _triangleTexture),
-                new StroopSquare(this, Color.Blue, _rectangleTexture),
-            };
-
             _colours = new Color[]
             {
                 Color.Aqua, Color.Beige, Color.Black, Color.Blue, Color.Brown, Color.Crimson, Color.DarkGray, Color.Gray, Color.Green, Color.LightBlue, Color.LightGray, Color.LimeGreen, Color.Magenta, Color.Orange, Color.Pink, Color.Purple, Color.Red, Color.White, Color.Yellow
@@ -81,6 +76,13 @@ namespace MainQuest2_SuperStroop
             _colourNames = new string[]
             {
                 "Aqua", "Beige", "Black", "Blue", "Brown", "Crimson", "Dark Gray", "Gray", "Green", "Light Blue", "Light Gray", "Lime", "Magenta", "Orange", "Pink", "Purple", "Red", "White", "Yellow"
+            };
+
+            _shapes = new StroopShape[]
+            {
+                new StroopCircle(this, _colours[_random.Next(_colours.Length)], _circleTexture),
+                new StroopTriangle(this, _colours[_random.Next(_colours.Length)], _triangleTexture),
+                new StroopSquare(this, _colours[_random.Next(_colours.Length)], _rectangleTexture),
             };
 
             _shapeRequester = new ShapeRequester(_shapes, _colours, _colourNames);
@@ -101,7 +103,7 @@ namespace MainQuest2_SuperStroop
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _displayColour = _shapeRequester.DisplayColour;
+            _displayColour = _shapeRequester.Colour;
             _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape} {MathF.Round(_timeRemaining, 1)}";
             _livesText = $"{_lives} Lives";
             _scoreText = $"{_score} Points";
