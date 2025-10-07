@@ -51,6 +51,7 @@ namespace MainQuest2_SuperStroop
             _elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             float t = MathHelper.Clamp(_elapsedTime / _movementDuration, 0f, 1f);
+            t = MathHelper.SmoothStep(0, 1, t);
 
             Vector2 newPosition = (1 - t) * _startPosition + t * _endPosition;
             _rectangle.X = (int)newPosition.X;
