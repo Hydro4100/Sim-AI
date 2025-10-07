@@ -31,7 +31,7 @@ namespace MainQuest2_SuperStroop
         private bool _mouseClicked = false;
         private MouseState ms = new MouseState(), oms;
 
-        private int _lives;
+        private int _lives = 3;
 
         public Game2()
         {
@@ -91,20 +91,23 @@ namespace MainQuest2_SuperStroop
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-            //_displayColour = Color.White;
             _displayColour = _shapeRequester.Colour;
             _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape}";
+            _livesText = $"{_lives} Lives";
+
             foreach (StroopShape shape in _shapes)
             {
                 if (shape.IsInside(Mouse.GetState().Position))
                 {
-                    _displayColour = shape.Colour;
-                    _displayText = $"Mouse over the {shape.ToString()}";
-
                     if (_mouseClicked)
                     {
-                        Click();
+                        if (shape != _shapeRequester.StroopShape)
+                        {
+                            _lives --;
+                            _shapeRequester.GetNewRequest() ;
+                            continue;
+                        }
+                        
                     }
                 }
             }
@@ -120,6 +123,7 @@ namespace MainQuest2_SuperStroop
             _spriteBatch.Begin();
 
             _spriteBatch.DrawString(_displayFont, _displayText, new Vector2((_graphics.GraphicsDevice.Viewport.Width - _displayFont.MeasureString(_displayText).X) / 2, 10), _displayColour);
+            _spriteBatch.DrawString(_displayFont, _livesText, new Vector2(10, 10), _livesColour);
 
             foreach (var shape in _shapes)
             {
@@ -129,11 +133,6 @@ namespace MainQuest2_SuperStroop
             _spriteBatch.End();
 
             base.Draw(gameTime);
-        }
-
-        private void Click()
-        {
-            Debug.WriteLine("clicked!");
         }
     }
 }
