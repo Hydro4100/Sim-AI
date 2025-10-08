@@ -9,6 +9,11 @@ namespace MainQuest3_AztecDeflect
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private PlayerShip _playerShip;
+        private Texture2D _textures;
+
+        private Rectangle ShipRect;
+
         public Game3()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -18,7 +23,8 @@ namespace MainQuest3_AztecDeflect
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _playerShip = new PlayerShip(this);
+            Components.Add(_playerShip);
 
             base.Initialize();
         }
@@ -27,7 +33,8 @@ namespace MainQuest3_AztecDeflect
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _textures = Content.Load<Texture2D>("textures");
+            ShipRect = new Rectangle(0, 0, 256, 256);
         }
 
         protected override void Update(GameTime gameTime)
@@ -44,7 +51,9 @@ namespace MainQuest3_AztecDeflect
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_textures, _playerShip.Rectangle, ShipRect, Color.White);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
