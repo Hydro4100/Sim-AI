@@ -77,9 +77,9 @@ namespace MainQuest2_SuperStroop
 
             _shapes = new StroopShape[]
             {
-                new StroopCircle(this, _colours[_random.Next(_colours.Length)], _circleTexture),
-                new StroopTriangle(this, _colours[_random.Next(_colours.Length)], _triangleTexture),
-                new StroopSquare(this, _colours[_random.Next(_colours.Length)], _rectangleTexture),
+                new StroopShape(this, _colours[_random.Next(_colours.Length)], _circleTexture),
+                new StroopShape(this, _colours[_random.Next(_colours.Length)], _triangleTexture),
+                new StroopShape(this, _colours[_random.Next(_colours.Length)], _rectangleTexture)
             };
 
             _shapeRequester = new ShapeRequester(_shapes, _colours, _colourNames);
@@ -104,7 +104,6 @@ namespace MainQuest2_SuperStroop
             _displayText = $"{_shapeRequester.ColourName} {_shapeRequester.StroopShape} {MathF.Round(_timeRemaining, 1)}";
             _livesText = $"{_lives} Lives";
             _scoreText = $"{_score} Points";
-            _displayText = MGGameLibrary.MyGame.helloLibrary;
 
             foreach (StroopShape shape in _shapes)
             {

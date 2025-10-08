@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace MainQuest2_SuperStroop
+namespace MGGameLibrary.Shapes
 {
-    internal class StroopTriangle : StroopShape
+    public class Triangle : Shape
     {
-        public StroopTriangle(Game game, Color colour, Texture2D texture) : base(game, colour, texture)
+        public Triangle(Vector2 position, int size) : base(position, size)
         {
-
         }
 
         public override bool IsInside(Point point)

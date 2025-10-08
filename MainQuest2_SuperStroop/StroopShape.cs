@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MGGameLibrary.Shapes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace MainQuest2_SuperStroop
 {
-    public abstract class StroopShape : GameComponent
+    public class StroopShape : GameComponent
     {
         private Color _colour;
         protected Rectangle _rectangle;
@@ -17,7 +18,9 @@ namespace MainQuest2_SuperStroop
 
         private static Random random = new Random();
 
-        public StroopShape(Game game, Color colour, Texture2D texture):base(game)
+        private Shape _libraryShape;
+
+        public StroopShape(Game game, Color colour, Texture2D texture) : base(game)
         {
             int size = random.Next(50, 100);
             _startPosition = new Vector2(random.Next(size, game.GraphicsDevice.Viewport.Width - size), random.Next(size, game.GraphicsDevice.Viewport.Height - size));
@@ -29,8 +32,21 @@ namespace MainQuest2_SuperStroop
             _colour = colour;
             _texture = texture;
 
-            _elapsedTime = 0f;
-            _movementDuration = 5f;
+            string shapeType = texture.Name.ToLower();
+
+            switch (shapeType)
+            {
+                case "circle":
+                    _libraryShape = new Circle(_startPosition, size);
+                    break;
+                case "triangle":
+                    _libraryShape = new Triangle(_startPosition, size);
+                    break;
+                case "square":
+                default:
+                    _libraryShape = new Square(_startPosition, size);
+                    break;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -38,11 +54,14 @@ namespace MainQuest2_SuperStroop
             spriteBatch.Draw(_texture, _rectangle, _colour);
         }
 
-        public abstract bool IsInside(Point point);
+        public bool IsInside(Point point)
+        {
+            return _libraryShape.IsInside(point);
+        }
 
         public override string ToString()
         {
-            return $"{_texture}";
+            return $"{_libraryShape.GetType().Name}";
         }
 
         public Color Colour
@@ -63,6 +82,8 @@ namespace MainQuest2_SuperStroop
             Vector2 newPosition = (1 - t) * _startPosition + t * _endPosition;
             _rectangle.X = (int)newPosition.X;
             _rectangle.Y = (int)newPosition.Y;
+
+            _libraryShape.UpdateRectangle(_rectangle);
 
             if (t >= 1f)
             {

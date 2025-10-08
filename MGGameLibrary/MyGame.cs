@@ -9,8 +9,6 @@ namespace MGGameLibrary
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public static string helloLibrary = "Hello from the library!";
-
         public MyGame()
         {
             _graphics = new GraphicsDeviceManager(this);
