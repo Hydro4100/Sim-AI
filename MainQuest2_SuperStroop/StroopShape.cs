@@ -72,6 +72,12 @@ namespace MainQuest2_SuperStroop
             }
         }
 
+        public Texture2D Texture
+        {
+            get { return _texture; }
+        }
+
+
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;

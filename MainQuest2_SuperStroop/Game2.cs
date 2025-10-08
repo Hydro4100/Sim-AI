@@ -82,7 +82,7 @@ namespace MainQuest2_SuperStroop
             _shapes = new List<StroopShape>();
             for (int i = 0; i < 3; i++)
             {
-                StroopShape shape = CreateRandomShape();
+                StroopShape shape = CreateUniqueShape();
                 _shapes.Add(shape);
                 Components.Add(shape);
             }
@@ -152,19 +152,42 @@ namespace MainQuest2_SuperStroop
             base.Draw(gameTime);
         }
 
-        private StroopShape CreateRandomShape()
+        private StroopShape CreateUniqueShape()
         {
-            Texture2D randomTexture = _shapeTextures[_random.Next(_shapeTextures.Count)];
-            Color randomColor = _colours[_random.Next(_colours.Length)];
+            int maxCombinations = _shapeTextures.Count * _colours.Length;
+            if (_shapes.Count >= maxCombinations)
+            {
+                Console.WriteLine("Warning: All possible shape combinations are on screen!");
+                return new StroopShape(this, _colours[0], _shapeTextures[0]);
+            }
 
-            return new StroopShape(this, randomColor, randomTexture);
+            while (true)
+            {
+                Texture2D candidateTexture = _shapeTextures[_random.Next(_shapeTextures.Count)];
+                Color candidateColor = _colours[_random.Next(_colours.Length)];
+
+                bool isDuplicate = false;
+                foreach (var existingShape in _shapes)
+                {
+                    if (existingShape.Texture == candidateTexture && existingShape.Colour == candidateColor)
+                    {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+
+                if (!isDuplicate)
+                {
+                    return new StroopShape(this, candidateColor, candidateTexture);
+                }
+            }
         }
 
         private void AddTwoShapes()
         {
             for (int i = 0; i < 2; i++)
             {
-                StroopShape newShape = CreateRandomShape();
+                StroopShape newShape = CreateUniqueShape();
                 _shapes.Add(newShape);
                 Components.Add(newShape);
             }
