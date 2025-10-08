@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace MainQuest2_SuperStroop
 {
@@ -13,8 +14,9 @@ namespace MainQuest2_SuperStroop
         private Texture2D _rectangleTexture;
         private Texture2D _circleTexture;
         private Texture2D _triangleTexture;
+        private List<Texture2D> _shapeTextures;
 
-        private StroopShape[] _shapes;
+        private List<StroopShape> _shapes;
         private Color[] _colours;
         private string[] _colourNames;
 
@@ -65,6 +67,8 @@ namespace MainQuest2_SuperStroop
             _triangleTexture = Content.Load<Texture2D>("triangle");
             _displayFont = Content.Load<SpriteFont>("displayFont");
 
+            _shapeTextures = new List<Texture2D> { _rectangleTexture, _circleTexture, _triangleTexture };
+
             _colours = new Color[]
             {
                 Color.Aqua, Color.Beige, Color.Black, Color.Blue, Color.Brown, Color.Crimson, Color.DarkGray, Color.Gray, Color.Green, Color.LightBlue, Color.LightGray, Color.LimeGreen, Color.Magenta, Color.Orange, Color.Pink, Color.Purple, Color.Red, Color.White, Color.Yellow
@@ -75,20 +79,16 @@ namespace MainQuest2_SuperStroop
                 "Aqua", "Beige", "Black", "Blue", "Brown", "Crimson", "Dark Gray", "Gray", "Green", "Light Blue", "Light Gray", "Lime", "Magenta", "Orange", "Pink", "Purple", "Red", "White", "Yellow"
             };
 
-            _shapes = new StroopShape[]
+            _shapes = new List<StroopShape>();
+            for (int i = 0; i < 3; i++)
             {
-                new StroopShape(this, _colours[_random.Next(_colours.Length)], _circleTexture),
-                new StroopShape(this, _colours[_random.Next(_colours.Length)], _triangleTexture),
-                new StroopShape(this, _colours[_random.Next(_colours.Length)], _rectangleTexture)
-            };
+                StroopShape shape = CreateRandomShape();
+                _shapes.Add(shape);
+                Components.Add(shape);
+            }
 
             _shapeRequester = new ShapeRequester(_shapes, _colours, _colourNames);
             _shapeRequester.GetNewRequest();
-
-            foreach (StroopShape shape in _shapes)
-            {
-                Components.Add(shape);
-            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -105,8 +105,9 @@ namespace MainQuest2_SuperStroop
             _livesText = $"{_lives} Lives";
             _scoreText = $"{_score} Points";
 
-            foreach (StroopShape shape in _shapes)
+            for (int i = 0; i < _shapes.Count; i++)
             {
+                var shape = _shapes[i];
                 if (shape.IsInside(Mouse.GetState().Position))
                 {
                     if (_mouseClicked)
@@ -114,7 +115,7 @@ namespace MainQuest2_SuperStroop
                         if (shape == _shapeRequester.StroopShape)
                         {
                             Correct();
-                            continue;
+                            break;
                         }
                         Fail();
                     }
@@ -151,10 +152,29 @@ namespace MainQuest2_SuperStroop
             base.Draw(gameTime);
         }
 
+        private StroopShape CreateRandomShape()
+        {
+            Texture2D randomTexture = _shapeTextures[_random.Next(_shapeTextures.Count)];
+            Color randomColor = _colours[_random.Next(_colours.Length)];
+
+            return new StroopShape(this, randomColor, randomTexture);
+        }
+
+        private void AddTwoShapes()
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                StroopShape newShape = CreateRandomShape();
+                _shapes.Add(newShape);
+                Components.Add(newShape);
+            }
+        }
+
         protected void Correct()
         {
             _score += 100;
             _time++;
+            AddTwoShapes();
             Reset();
         }
 

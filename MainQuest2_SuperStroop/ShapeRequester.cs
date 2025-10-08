@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace MainQuest2_SuperStroop
 {
     internal class ShapeRequester
     {
         private Color[] _colours;
-        private StroopShape[] _shapes;
+        private List<StroopShape> _shapes;
         private string[] _colourNames;
         private Random _random = new Random();
 
@@ -16,7 +16,7 @@ namespace MainQuest2_SuperStroop
         private string _colourName;
         private Color _displayColour;
 
-        public ShapeRequester(StroopShape[] shapes, Color[] colours, string[] colourNames)
+        public ShapeRequester(List<StroopShape> shapes, Color[] colours, string[] colourNames)
         {
             _colours = colours;
             _shapes = shapes;
@@ -26,7 +26,7 @@ namespace MainQuest2_SuperStroop
         public void GetNewRequest()
         {
             int index = _random.Next(_colours.Length);
-            _shape = _shapes[_random.Next(_shapes.Length)];
+            _shape = _shapes[_random.Next(_shapes.Count)];
             _colour = _shape.Colour;
             for (int i = 0; i < _colours.Length; i++)
             {
