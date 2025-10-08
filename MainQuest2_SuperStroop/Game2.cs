@@ -203,7 +203,7 @@ namespace MainQuest2_SuperStroop
         protected void Correct()
         {
             _score += 100;
-            _time++;
+            //_time++;
             AddTwoShapes();
             Reset();
         }
