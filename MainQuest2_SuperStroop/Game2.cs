@@ -105,18 +105,25 @@ namespace MainQuest2_SuperStroop
             _livesText = $"{_lives} Lives";
             _scoreText = $"{_score} Points";
 
-            for (int i = 0; i < _shapes.Count; i++)
+            if (_mouseClicked)
             {
-                var shape = _shapes[i];
-                if (shape.IsInside(Mouse.GetState().Position))
+                var clickedShapes = new List<StroopShape>();
+                foreach (var shape in _shapes)
                 {
-                    if (_mouseClicked)
+                    if (shape.IsInside(ms.Position))
                     {
-                        if (shape == _shapeRequester.StroopShape)
-                        {
-                            Correct();
-                            break;
-                        }
+                        clickedShapes.Add(shape);
+                    }
+                }
+
+                if (clickedShapes.Count > 0)
+                {
+                    if (clickedShapes.Contains(_shapeRequester.StroopShape))
+                    {
+                        Correct();
+                    }
+                    else
+                    {
                         Fail();
                     }
                 }
