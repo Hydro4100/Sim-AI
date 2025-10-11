@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace MainQuest3_AztecDeflect
 {
@@ -13,7 +11,6 @@ namespace MainQuest3_AztecDeflect
         public PlayerShip(Game game) : base(game)
         {
             _rectangle = new Rectangle(10, Game.GraphicsDevice.Viewport.Height - 10 - 75, 75, 75);
-            Rectangle = new Rectangle(0, 0, 256, 256);
         }
 
         public void MoveSideways(int amount)
@@ -33,6 +30,8 @@ namespace MainQuest3_AztecDeflect
             {
                 MoveSideways(5);
             }
+
+            Rectangle = _rectangle;
 
             base.Update(gameTime);
         }
