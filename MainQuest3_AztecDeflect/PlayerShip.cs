@@ -8,6 +8,8 @@ namespace MainQuest3_AztecDeflect
         private Rectangle _rectangle;
         public Rectangle Rectangle;
 
+        private float _fireRate = 0.1f;
+
         public PlayerShip(Game game) : base(game)
         {
             _rectangle = new Rectangle(10, Game.GraphicsDevice.Viewport.Height - 10 - 75, 75, 75);
@@ -22,6 +24,8 @@ namespace MainQuest3_AztecDeflect
 
         public override void Update(GameTime gameTime)
         {
+            _fireRate -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 MoveSideways(-5);
@@ -34,6 +38,17 @@ namespace MainQuest3_AztecDeflect
             Rectangle = _rectangle;
 
             base.Update(gameTime);
+        }
+
+        public EnergyOrb FireEnergyOrb()
+        {
+            if (_fireRate <= 0)
+            {
+                _fireRate = 0.1f;
+                EnergyOrb orb = new EnergyOrb(new Vector2(_rectangle.Center.X, _rectangle.Center.Y - _rectangle.Height / 2), new Vector2(0, -200), Game);
+                return orb;
+            }
+            return null;
         }
     }
 }

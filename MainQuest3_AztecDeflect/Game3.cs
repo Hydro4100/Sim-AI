@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace MainQuest3_AztecDeflect
 {
@@ -13,6 +14,8 @@ namespace MainQuest3_AztecDeflect
         private Texture2D _textures;
 
         private Rectangle ShipRect;
+
+        private List<EnergyOrb> _orbsList = new List<EnergyOrb> { };
 
         public Game3()
         {
@@ -42,7 +45,17 @@ namespace MainQuest3_AztecDeflect
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                EnergyOrb orb = _playerShip.FireEnergyOrb();
+                if (orb != null)
+                {
+                    _orbsList.Add(orb);
+                    Components.Add(orb);
+                }
+            }
+
+            RemoveOrbs();
 
             base.Update(gameTime);
         }
@@ -52,10 +65,32 @@ namespace MainQuest3_AztecDeflect
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
+
             _spriteBatch.Draw(_textures, _playerShip.Rectangle, ShipRect, Color.White);
+
+            foreach (EnergyOrb energyOrb in _orbsList)
+            {
+                _spriteBatch.Draw(_textures, energyOrb.Rectangle, new Rectangle(512, 0, 256, 256), Color.OrangeRed);
+            }
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void RemoveOrbs()
+        {
+            for (int i = _orbsList.Count - 1; i >= 0; --i)
+            {
+                if (_orbsList[i].Position.X < 0 ||
+                    _orbsList[i].Position.X > GraphicsDevice.Viewport.Width ||
+                    _orbsList[i].Position.Y < 0 ||
+                    _orbsList[i].Position.Y > GraphicsDevice.Viewport.Height)
+                {
+                    Components.Remove(_orbsList[i]);
+                    _orbsList.Remove(_orbsList[i]);
+                }
+            }
         }
     }
 }
