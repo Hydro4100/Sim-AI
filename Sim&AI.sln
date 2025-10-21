@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGGameLibrary", "MGGameLibrary\MGGameLibrary.csproj", "{5A28B7DF-51DE-4AB6-97B1-6708603C10C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainQuest3_AztecDeflect", "MainQuest3_AztecDeflect\MainQuest3_AztecDeflect.csproj", "{C690B1B8-59CB-47C1-8007-032275D9F726}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5A28B7DF-51DE-4AB6-97B1-6708603C10C7} = {5A28B7DF-51DE-4AB6-97B1-6708603C10C7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

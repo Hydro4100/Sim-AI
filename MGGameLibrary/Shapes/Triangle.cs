@@ -19,5 +19,15 @@ namespace MGGameLibrary.Shapes
 
             return w1 >= 0 && w2 >= 0 && (w1 + w2) <= 1;
         }
+
+        public override bool Intersects(Shape other)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool IntersectsCircle(Circle circle)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

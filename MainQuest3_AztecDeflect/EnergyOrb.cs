@@ -1,9 +1,11 @@
 ﻿
+using MGGameLibrary;
+using MGGameLibrary.Shapes;
 using Microsoft.Xna.Framework;
 
 namespace MainQuest3_AztecDeflect
 {
-    internal class EnergyOrb : GameComponent
+    internal class EnergyOrb : GameComponent, ICollidable
     {
         public Vector2 Position;
         public Vector2 Velocity;
@@ -27,6 +29,13 @@ namespace MainQuest3_AztecDeflect
         {
             Position = Position + (float)gameTime.ElapsedGameTime.TotalSeconds * Velocity; // Euler Integration
             base.Update(gameTime);
+        }
+
+        public Shape Shape { get { return new Circle(Position, ORB_RADIUS); } } // yuck, inefficient
+
+        public bool CollidesWith(ICollidable other)
+        {
+            return Shape.Intersects(other.Shape);
         }
     }
 }
