@@ -34,7 +34,7 @@ namespace MainQuest3_AztecDeflect
             _playerShip = new PlayerShip(this);
             Components.Add(_playerShip);
 
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 30)));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 100)));
 
             base.Initialize();
         }

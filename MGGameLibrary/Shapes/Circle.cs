@@ -10,6 +10,8 @@ namespace MGGameLibrary.Shapes
 
         public Circle(Vector2 position, int size) : base(position, size)
         {
+            Radius = size / 2;
+            Centre = new Vector2(position.X + Radius, position.Y + Radius);
         }
 
         public override bool IsInside(Point point)
@@ -20,7 +22,12 @@ namespace MGGameLibrary.Shapes
 
         public override bool Intersects(Shape other)
         {
-            throw new NotImplementedException();
+            if (other is Circle)
+            {
+                return Shape.Intersects(other as Circle, this);
+            }
+
+            return false;
         }
 
         public override bool IntersectsCircle(Circle circle)
