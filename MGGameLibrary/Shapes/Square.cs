@@ -14,12 +14,12 @@ namespace MGGameLibrary.Shapes
             return _rectangle.Contains(point);
         }
 
-        public override bool Intersects(Shape other)
+        public override bool Intersects(Shape other, ref Vector2 collisionNormal)
         {
             throw new System.NotImplementedException();
         }
 
-        public override bool IntersectsCircle(Circle circle)
+        public override bool IntersectsCircle(Circle other, ref Vector2 collisionNormal)
         {
             throw new System.NotImplementedException();
         }

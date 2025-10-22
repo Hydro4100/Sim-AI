@@ -62,13 +62,15 @@ namespace MainQuest3_AztecDeflect
                 }
             }
 
+            Vector2 collisionNormal = Vector2.Zero;
             for (int i = 0; i < _orbsList.Count; ++i)
             {
                 foreach (Obstacle obstacle in _obstaclesList)
                 {
-                    if (obstacle.CollidesWith(_orbsList[i]))
+                    if (obstacle.CollidesWith(_orbsList[i], ref collisionNormal))
                     {
-                        _orbsList[i].Velocity = Vector2.Zero;
+                        _orbsList[i].RevertToPreviousPosition();
+                        _orbsList[i].Velocity = Vector2.Reflect(_orbsList[i].Velocity, collisionNormal);
                     }
                 }
             }

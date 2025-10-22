@@ -25,19 +25,24 @@ namespace MGGameLibrary.Shapes
             _rectangle = newRect;
         }
 
-        public static bool Intersects(Circle c1, Circle c2)
+        public static bool Intersects(Circle c1, Circle c2, ref Vector2 collisionNormal)
         {
             float distanceSquared = Vector2.DistanceSquared(c1.Centre, c2.Centre);
             float radiusSum = c1.Radius + c2.Radius;
             bool collision = distanceSquared <= radiusSum * radiusSum;
+
+            if (collision)
+            {
+                collisionNormal = Vector2.Normalize(c1.Centre - c2.Centre);
+            }
 
             return collision;
         }
 
         public abstract bool IsInside(Point point);
 
-        public abstract bool Intersects(Shape other);
+        public abstract bool Intersects(Shape other, ref Vector2 collisionNormal);
 
-        public abstract bool IntersectsCircle(Circle circle);
+        public abstract bool IntersectsCircle(Circle other, ref Vector2 collisionNormal);
     }
 }

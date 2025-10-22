@@ -20,12 +20,12 @@ namespace MGGameLibrary.Shapes
             return w1 >= 0 && w2 >= 0 && (w1 + w2) <= 1;
         }
 
-        public override bool Intersects(Shape other)
+        public override bool Intersects(Shape other, ref Vector2 collisionNormal)
         {
             throw new System.NotImplementedException();
         }
 
-        public override bool IntersectsCircle(Circle circle)
+        public override bool IntersectsCircle(Circle other, ref Vector2 collisionNormal)
         {
             throw new System.NotImplementedException();
         }

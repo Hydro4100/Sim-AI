@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MGGameLibrary.Shapes;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace MGGameLibrary
 {
@@ -11,6 +14,6 @@ namespace MGGameLibrary
     {
         public Shape Shape { get; }
 
-        public bool CollidesWith(ICollidable other);
+        public bool CollidesWith(ICollidable other, ref Vector2 collisionNormal);
     }
 }

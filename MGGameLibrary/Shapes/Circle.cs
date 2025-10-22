@@ -20,19 +20,19 @@ namespace MGGameLibrary.Shapes
             return MathF.Pow(point.X - (_rectangle.X + radius), 2) + MathF.Pow(point.Y - (_rectangle.Y + radius), 2) <= MathF.Pow(radius, 2);
         }
 
-        public override bool Intersects(Shape other)
+        public override bool Intersects(Shape other, ref Vector2 collisionNormal)
         {
             if (other is Circle)
             {
-                return Shape.Intersects(other as Circle, this);
+                return other.IntersectsCircle(this, ref collisionNormal);
             }
 
             return false;
         }
 
-        public override bool IntersectsCircle(Circle circle)
+        public override bool IntersectsCircle(Circle other, ref Vector2 collisionNormal)
         {
-            throw new NotImplementedException();
+            return Intersects(this, other, ref collisionNormal);
         }
     }
 }

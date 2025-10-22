@@ -17,6 +17,8 @@ namespace MainQuest3_AztecDeflect
             }
         }
 
+        private Vector2 _previousPosition;
+
         const int ORB_RADIUS = 5;
 
         public EnergyOrb(Vector2 position, Vector2 velocity, Game game) : base(game)
@@ -27,15 +29,21 @@ namespace MainQuest3_AztecDeflect
 
         public override void Update(GameTime gameTime)
         {
+            _previousPosition = Position;
             Position = Position + (float)gameTime.ElapsedGameTime.TotalSeconds * Velocity; // Euler Integration
             base.Update(gameTime);
         }
 
         public Shape Shape { get { return new Circle(Position, ORB_RADIUS); } } // yuck, inefficient
 
-        public bool CollidesWith(ICollidable other)
+        public bool CollidesWith(ICollidable other, ref Vector2 collisionNormal)
         {
-            return Shape.Intersects(other.Shape);
+            return Shape.Intersects(other.Shape, ref collisionNormal);
+        }
+
+        public void RevertToPreviousPosition()
+        {
+            Position = _previousPosition;
         }
     }
 }
