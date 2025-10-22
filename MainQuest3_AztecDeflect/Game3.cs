@@ -22,6 +22,8 @@ namespace MainQuest3_AztecDeflect
 
         private List<ICollidable> _obstaclesList = new List<ICollidable> { };
 
+        private List<Disc> _discsList = new List<Disc> { };
+
         public Game3()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -37,6 +39,8 @@ namespace MainQuest3_AztecDeflect
             _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 100)));
             _obstaclesList.Add(new Obstacle(new Circle(new Vector2(100, 100), 50)));
             _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width - 100, 200), 70)));
+
+            _discsList.Add(new Disc(100, new Vector2(75, 75), this));
 
             base.Initialize();
         }
@@ -77,6 +81,23 @@ namespace MainQuest3_AztecDeflect
                 }
             }
 
+
+            for (int i = 0; i < _discsList.Count; ++i)
+            {
+                _discsList[i].ApplyForce(new Vector2(0, 25000f)); // gravity (incorrect)
+                _discsList[i].Update((float)TargetElapsedTime.TotalSeconds);
+
+                foreach (Obstacle obstacle in _obstaclesList)
+                {
+                    Disc disc = _discsList[i];
+                    if (obstacle.CollidesWith(disc, ref collisionNormal))
+                    {
+                        disc.RevertToPreviousPosition();
+                        disc.Velocity = Vector2.Reflect(disc.Velocity, collisionNormal);
+                    }
+                }
+            }
+
             RemoveOrbs();
 
             base.Update(gameTime);
@@ -103,6 +124,14 @@ namespace MainQuest3_AztecDeflect
 
                     _spriteBatch.Draw(_textures, r, new Rectangle(256, 0, 256, 256), Color.White);
                 }
+            }
+
+            foreach (Disc disc in _discsList)
+            {
+                Circle circle = disc.Shape as Circle;
+                Rectangle r = new Rectangle((int)(disc.Position.X - circle.Radius), (int)(circle.Centre.Y - circle.Radius), (int)circle.Radius * 2, (int)circle.Radius * 2);
+
+                _spriteBatch.Draw(_textures, r, new Rectangle(512, 0, 256, 256), Color.Red);
             }
 
             _spriteBatch.End();

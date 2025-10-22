@@ -31,7 +31,7 @@ namespace MGGameLibrary.Shapes
             float radiusSum = c1.Radius + c2.Radius;
             bool collision = distanceSquared <= radiusSum * radiusSum;
 
-            if (collision)
+            if (collision && c1 != c2)
             {
                 collisionNormal = Vector2.Normalize(c1.Centre - c2.Centre);
             }
