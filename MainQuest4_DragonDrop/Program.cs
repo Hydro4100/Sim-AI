@@ -1,2 +1,2 @@
-﻿using var game = new MainQuest4_DragonDrop.Game1();
+﻿using var game = new MainQuest4_DragonDrop.Game4();
 game.Run();
