@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainQuest3_AztecDeflect", "
 		{5A28B7DF-51DE-4AB6-97B1-6708603C10C7} = {5A28B7DF-51DE-4AB6-97B1-6708603C10C7}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainQuest4_DragonDrop", "MainQuest4_DragonDrop\MainQuest4_DragonDrop.csproj", "{5C079608-F50B-484C-9788-04A9902C5E9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{C690B1B8-59CB-47C1-8007-032275D9F726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C690B1B8-59CB-47C1-8007-032275D9F726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C690B1B8-59CB-47C1-8007-032275D9F726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C079608-F50B-484C-9788-04A9902C5E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C079608-F50B-484C-9788-04A9902C5E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C079608-F50B-484C-9788-04A9902C5E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C079608-F50B-484C-9788-04A9902C5E9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
