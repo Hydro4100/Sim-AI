@@ -9,8 +9,8 @@ namespace MainQuest4_DragonDrop
     {
         private SteeringBehaviour _behaviour;
         private PhysicsObject _physicsObject;
-        public float MaxSpeed { get; set; } = 300f;
-        public float Heading { get; set; }
+        public float MaxSpeed { get; set; }
+        public float Heading { get; private set; }
         public Vector2 Position
         {
             get { return _physicsObject.Position; }
@@ -27,6 +27,7 @@ namespace MainQuest4_DragonDrop
             _physicsObject = new PhysicsObject(1.0f, position, game);
             Heading = heading;
             _behaviour = behaviour;
+            MaxSpeed = 200f;
         }
 
         public override void Update(GameTime gameTime)

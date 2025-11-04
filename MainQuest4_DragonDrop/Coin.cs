@@ -11,13 +11,25 @@ namespace MainQuest4_DragonDrop
         public Rectangle TextureSource { get; set; }
         public Rectangle TextureRectangle { get; private set; }
 
-        public Vector2 TargetPosition => Circle.Centre;
+        public Vector2 TargetPosition
+        {
+            get
+            {
+                return Circle.Position + new Vector2(Circle.Radius);
+            }
+        }
 
         public Coin(Circle circle, Rectangle textureSource)
         {
             Circle = circle;
             TextureSource = textureSource;
-            TextureRectangle = new Rectangle((int)(Circle.Position.X - Circle.Radius), (int)(Circle.Position.Y - Circle.Radius), (int)(Circle.Radius * 2), (int)(Circle.Radius * 2));
+
+            TextureRectangle = new Rectangle(
+                (int)Circle.Position.X,
+                (int)Circle.Position.Y,
+                (int)(Circle.Radius * 2),
+                (int)(Circle.Radius * 2)
+            );
         }
 
         public void Draw(SpriteBatch spriteBatch, Texture2D coinTexture)
@@ -32,6 +44,22 @@ namespace MainQuest4_DragonDrop
                 effects: SpriteEffects.None,
                 layerDepth: 0f
             );
+        }
+
+        public void MoveCoin(Vector2 newCenterPosition)
+        {
+            Vector2 newTopLeft = newCenterPosition - new Vector2(Circle.Radius);
+
+            Circle.Position = newTopLeft;
+
+            TextureRectangle = new Rectangle(
+                (int)Circle.Position.X,
+                (int)Circle.Position.Y,
+                (int)(Circle.Radius * 2),
+                (int)(Circle.Radius * 2)
+            );
+
+            Circle.Centre = TargetPosition;
         }
     }
 }

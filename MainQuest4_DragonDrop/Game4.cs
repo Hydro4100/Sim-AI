@@ -16,6 +16,9 @@ namespace MainQuest4_DragonDrop
         private Texture2D _dragonsTexture;
         private Texture2D _coinsTexture;
 
+        private bool _dragged = false;
+        private Vector2 _dragOffset;
+
         public Game4()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -25,18 +28,11 @@ namespace MainQuest4_DragonDrop
 
         protected override void Initialize()
         {
-            Vector2 initialAgentPosition = new Vector2(
-                _graphics.PreferredBackBufferWidth / 2,
-                _graphics.PreferredBackBufferHeight / 2
-            );
-
             Circle coinCircle = new Circle(new Vector2(100, 100), 50);
 
             _coin = new Coin(coinCircle, Rectangle.Empty);
 
-            SeekBehaviour seekBehaviour = new SeekBehaviour(_coin);
-
-            _agent = new Agent(initialAgentPosition, 0f, this, seekBehaviour);
+            _agent = new Agent(new Vector2(100, 350), 0f, this, new SeekBehaviour(_coin));
             Components.Add(_agent);
 
             base.Initialize();
@@ -58,7 +54,29 @@ namespace MainQuest4_DragonDrop
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            MouseState mouseState = Mouse.GetState();
+            Vector2 mousePosition = mouseState.Position.ToVector2();
+
+            if (_dragged)
+            {
+                _coin.MoveCoin(mousePosition + _dragOffset);
+
+                if (mouseState.LeftButton == ButtonState.Released)
+                {
+                    _dragged = false;
+                }
+            }
+            else
+            {
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    if (_coin.Circle.IsInside(mouseState.Position))
+                    {
+                        _dragged = true;
+                        _dragOffset = _coin.Circle.Centre - mousePosition;
+                    }
+                }
+            }
 
             base.Update(gameTime);
         }
@@ -70,7 +88,7 @@ namespace MainQuest4_DragonDrop
             _spriteBatch.Begin();
 
             _agent.Draw(_spriteBatch, _dragonsTexture);
-            _coin.Draw(_spriteBatch, _coinsTexture);
+            _spriteBatch.Draw(_coinsTexture, _coin.TextureRectangle, _coin.TextureSource, Color.White);
 
             _spriteBatch.End();
 
