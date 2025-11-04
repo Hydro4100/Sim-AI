@@ -3,6 +3,7 @@ using MGGameLibrary.Shapes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace MainQuest4_DragonDrop
 {
@@ -13,8 +14,11 @@ namespace MainQuest4_DragonDrop
 
         private Agent _agent;
         private Agent _agent2;
+        private Agent _agent3;
         private Coin _coin;
         private Rock _rock;
+
+        private List<ITargetable> _path;
 
         private Texture2D _dragonsTexture;
         private Texture2D _coinsTexture;
@@ -45,11 +49,22 @@ namespace MainQuest4_DragonDrop
             Circle rockCircle = new Circle(rockPosition, rockSize);
             _rock = new Rock(rockCircle);
 
+            _path = new List<ITargetable>
+            {
+                new SimpleTargetable(new Vector2(100, 100)),
+                new SimpleTargetable(new Vector2(300, 100)),
+                new SimpleTargetable(new Vector2(300, 300)),
+                new SimpleTargetable(new Vector2(100, 300))
+            };
+
             _agent = new Agent(new Vector2(100, 350), 0f, this, new SeekBehaviour(_coin), 0, 0);
             Components.Add(_agent);
 
             _agent2 = new Agent(new Vector2(50, 50), 0f, this, new SeekBehaviour(_agent), 1, 0);
             Components.Add(_agent2);
+
+            _agent3 = new Agent(new Vector2(100, 100), 0f, this, new PathFollowingBehaviour(_path, 50f), 2, 0);
+            Components.Add(_agent3);
 
             base.Initialize();
         }
@@ -120,6 +135,7 @@ namespace MainQuest4_DragonDrop
 
             _agent.Draw(_spriteBatch, _dragonsTexture);
             _agent2.Draw(_spriteBatch, _dragonsTexture);
+            _agent3.Draw(_spriteBatch, _dragonsTexture);
             _spriteBatch.Draw(_coinsTexture, _coin.TextureRectangle, _coin.TextureSource, Color.White);
             _spriteBatch.Draw(_rockTexture, _rock.TextureRectangle, null, Color.White);
 
