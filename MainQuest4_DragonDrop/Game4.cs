@@ -13,9 +13,11 @@ namespace MainQuest4_DragonDrop
         private Agent _agent;
         private Agent _agent2;
         private Coin _coin;
+        private Rock _rock;
 
         private Texture2D _dragonsTexture;
         private Texture2D _coinsTexture;
+        private Texture2D _rockTexture;
 
         private bool _dragged = false;
         private Vector2 _dragOffset;
@@ -33,6 +35,11 @@ namespace MainQuest4_DragonDrop
 
             _coin = new Coin(coinCircle, Rectangle.Empty);
 
+            Vector2 rockPosition = new Vector2(_graphics.GraphicsDevice.Viewport.Width / 2 - 64, _graphics.GraphicsDevice.Viewport.Height / 2 - 64);
+            int rockSize = 128;
+            Circle rockCircle = new Circle(rockPosition, rockSize);
+            _rock = new Rock(rockCircle);
+
             _agent = new Agent(new Vector2(100, 350), 0f, this, new SeekBehaviour(_coin), 0, 0);
             Components.Add(_agent);
 
@@ -48,6 +55,8 @@ namespace MainQuest4_DragonDrop
 
             _dragonsTexture = Content.Load<Texture2D>("dragons");
             _coinsTexture = Content.Load<Texture2D>("coins");
+            _rockTexture = Content.Load<Texture2D>("rock");
+
             int coinSourceWidth = _coinsTexture.Width / 4;
             int coinSourceHeight = _coinsTexture.Height / 4;
             _coin.TextureSource = new Rectangle(0, 0, coinSourceWidth, coinSourceHeight);
@@ -94,6 +103,7 @@ namespace MainQuest4_DragonDrop
             _agent.Draw(_spriteBatch, _dragonsTexture);
             _agent2.Draw(_spriteBatch, _dragonsTexture);
             _spriteBatch.Draw(_coinsTexture, _coin.TextureRectangle, _coin.TextureSource, Color.White);
+            _spriteBatch.Draw(_rockTexture, _rock.TextureRectangle, null, Color.White);
 
             _spriteBatch.End();
 
