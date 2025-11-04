@@ -1,4 +1,5 @@
-﻿using MGGameLibrary.Shapes;
+﻿using MGGameLibrary;
+using MGGameLibrary.Shapes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -22,6 +23,8 @@ namespace MainQuest4_DragonDrop
         private bool _dragged = false;
         private Vector2 _dragOffset;
 
+        private Color _backgroundColor;
+
         public Game4()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -31,6 +34,8 @@ namespace MainQuest4_DragonDrop
 
         protected override void Initialize()
         {
+            _backgroundColor = Color.CornflowerBlue;
+
             Circle coinCircle = new Circle(new Vector2(100, 100), 50);
 
             _coin = new Coin(coinCircle, Rectangle.Empty);
@@ -91,12 +96,25 @@ namespace MainQuest4_DragonDrop
                 }
             }
 
+            Vector2 coinCenter = _coin.Circle.Position + new Vector2(_coin.Circle.Radius);
+
+            LineSegment toCoin = new LineSegment(_agent.Position, coinCenter);
+
+            if (Shape.Intersects(toCoin, _rock.Circle))
+            {
+                _backgroundColor = Color.SlateBlue;
+            }
+            else
+            {
+                _backgroundColor = Color.CornflowerBlue;
+            }
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(_backgroundColor);
 
             _spriteBatch.Begin();
 
