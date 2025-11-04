@@ -13,10 +13,6 @@ namespace MainQuest4_DragonDrop
         private SpriteBatch _spriteBatch;
 
         private Agent _agent;
-        private Agent _agent2;
-        private Agent _agent3;
-        private Agent _agent4;
-        private Agent _agent5;
         private Coin _coin;
         private Rock _rock;
 
@@ -42,50 +38,39 @@ namespace MainQuest4_DragonDrop
         {
             _backgroundColor = Color.CornflowerBlue;
 
-            Circle coinCircle = new Circle(new Vector2(100, 100), 50);
-
+            Vector2 coinPosition = new Vector2(700, 350);
+            int coinSize = 64;
+            Circle coinCircle = new Circle(coinPosition, coinSize);
             _coin = new Coin(coinCircle, Rectangle.Empty);
 
-            Vector2 rockPosition = new Vector2(_graphics.GraphicsDevice.Viewport.Width / 2 - 64, _graphics.GraphicsDevice.Viewport.Height / 2 - 64);
+            Vector2 rockPosition = new Vector2(400, 250);
             int rockSize = 128;
             Circle rockCircle = new Circle(rockPosition, rockSize);
             _rock = new Rock(rockCircle);
 
-            _path = new List<ITargetable>
+            List<ICollidable> collidableList = new List<ICollidable>() { _rock };
+
+            List<Vector2> whiskers = new List<Vector2>()
             {
-                new SimpleTargetable(new Vector2(100, 100)),
-                new SimpleTargetable(new Vector2(300, 100)),
-                new SimpleTargetable(new Vector2(300, 300)),
-                new SimpleTargetable(new Vector2(100, 300))
+                new Vector2(0, -100),
+                new Vector2(30, -100),
+                new Vector2(-30, -100)
             };
 
-            _agent = new Agent(new Vector2(100, 350), 0f, this, new SeekBehaviour(_coin), 0, 0);
-            Components.Add(_agent);
-
-            _agent2 = new Agent(new Vector2(50, 50), 0f, this, new SeekBehaviour(_agent), 1, 0);
-            Components.Add(_agent2);
-
-            _agent3 = new Agent(new Vector2(100, 100), 0f, this, new PathFollowingBehaviour(_path, 50f), 2, 0);
-            Components.Add(_agent3);
-
-            _agent4 = new Agent(new Vector2(100, 100), 0f, this, new FleeBehaviour(_coin), 0, 1);
-            Components.Add(_agent4);
+            SeekBehaviour seekBehaviour = new SeekBehaviour(_coin);
+            AvoidCollidableWithWhiskersBehaviour avoidBehaviour = new AvoidCollidableWithWhiskersBehaviour(collidableList, whiskers);
 
             List<SteeringBehaviour> behaviours = new List<SteeringBehaviour>()
             {
-                new FleeBehaviour(_coin),
-                new SeekBehaviour(_agent3),
+                seekBehaviour,
+                avoidBehaviour
             };
 
-            TruncatedSumSteeringBehaviour truncatedSumBehaviour = new TruncatedSumSteeringBehaviour(behaviours, 150.0f);
+            TruncatedSumSteeringBehaviour truncatedSumBehaviour = new TruncatedSumSteeringBehaviour(behaviours, 200f);
 
-            _agent5 = new Agent(
-                new Vector2(600, 300),
-                0f,
-                this,
-                truncatedSumBehaviour,
-                1, 1);
-            Components.Add(_agent5);
+            _agent = new Agent(new Vector2(100, 100), 0f, this, truncatedSumBehaviour, 0, 0);
+
+            Components.Add(_agent);
 
             base.Initialize();
         }
@@ -155,10 +140,6 @@ namespace MainQuest4_DragonDrop
             _spriteBatch.Begin();
 
             _agent.Draw(_spriteBatch, _dragonsTexture);
-            _agent2.Draw(_spriteBatch, _dragonsTexture);
-            _agent3.Draw(_spriteBatch, _dragonsTexture);
-            _agent4.Draw(_spriteBatch, _dragonsTexture);
-            _agent5.Draw(_spriteBatch, _dragonsTexture);
             _spriteBatch.Draw(_coinsTexture, _coin.TextureRectangle, _coin.TextureSource, Color.White);
             _spriteBatch.Draw(_rockTexture, _rock.TextureRectangle, null, Color.White);
 
