@@ -14,6 +14,9 @@ namespace MGGameLibrary
         {
             _mass = mass;
             _position = position;
+            _previousPosition = position;
+            _velocity = Vector2.Zero;
+            _force = Vector2.Zero;
         }
 
         public void ApplyForce(Vector2 force)
@@ -36,7 +39,7 @@ namespace MGGameLibrary
 
         public void RevertToPreviousPosition()
         {
-
+            _position = _previousPosition;
         }
 
         public Vector2 Position { get { return _position; } set { _position = value; } }

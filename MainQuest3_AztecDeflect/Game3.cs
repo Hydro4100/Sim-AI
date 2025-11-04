@@ -3,7 +3,6 @@ using MGGameLibrary.Shapes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
 
 namespace MainQuest3_AztecDeflect
@@ -24,6 +23,8 @@ namespace MainQuest3_AztecDeflect
 
         private List<Disc> _discsList = new List<Disc> { };
 
+        private const float GRAVITY_ACCELERATION = 250f;
+
         public Game3()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -37,10 +38,10 @@ namespace MainQuest3_AztecDeflect
             Components.Add(_playerShip);
 
             _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 100)));
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(100, 100), 50)));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(100, 300), 50)));
             _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width - 100, 200), 70)));
 
-            _discsList.Add(new Disc(100, new Vector2(75, 75), this));
+            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(75, 75), this));
 
             base.Initialize();
         }
@@ -84,12 +85,15 @@ namespace MainQuest3_AztecDeflect
 
             for (int i = 0; i < _discsList.Count; ++i)
             {
-                _discsList[i].ApplyForce(new Vector2(0, 25000f)); // gravity (incorrect)
-                _discsList[i].Update((float)TargetElapsedTime.TotalSeconds);
+                Disc disc = _discsList[i];
+
+                Vector2 gravityForce = new Vector2(0, Disc.DISC_MASS * GRAVITY_ACCELERATION);
+                disc.ApplyForce(gravityForce);
+
+                disc.Update((float)TargetElapsedTime.TotalSeconds);
 
                 foreach (Obstacle obstacle in _obstaclesList)
                 {
-                    Disc disc = _discsList[i];
                     if (obstacle.CollidesWith(disc, ref collisionNormal))
                     {
                         disc.RevertToPreviousPosition();
@@ -129,7 +133,7 @@ namespace MainQuest3_AztecDeflect
             foreach (Disc disc in _discsList)
             {
                 Circle circle = disc.Shape as Circle;
-                Rectangle r = new Rectangle((int)(disc.Position.X - circle.Radius), (int)(circle.Centre.Y - circle.Radius), (int)circle.Radius * 2, (int)circle.Radius * 2);
+                Rectangle r = new Rectangle((int)(disc.Position.X - circle.Radius), (int)(disc.Position.Y - circle.Radius), (int)circle.Radius * 2, (int)circle.Radius * 2);
 
                 _spriteBatch.Draw(_textures, r, new Rectangle(512, 0, 256, 256), Color.Red);
             }

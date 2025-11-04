@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MGGameLibrary;
+﻿using MGGameLibrary;
 using MGGameLibrary.Shapes;
 using Microsoft.Xna.Framework;
 
@@ -17,7 +12,7 @@ namespace MainQuest3_AztecDeflect
 
         public Disc(float mass, Vector2 position, Game game) : base(mass, position, game)
         {
-            _circle = new Circle(position, DISC_RADIUS);
+            _circle = new Circle(position, DISC_RADIUS * 2);
         }
 
         public override void Update(float deltaTime)
@@ -26,14 +21,15 @@ namespace MainQuest3_AztecDeflect
             _circle.Position = Position;
         }
 
-        public bool CollidesWith(ICollidable other)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool CollidesWith(ICollidable other, ref Vector2 collisionNormal)
         {
-            throw new NotImplementedException();
+            return _circle.Intersects(other.Shape, ref collisionNormal);
+        }
+
+        public bool CollidesWith(ICollidable other)
+        {
+            Vector2 dummyNormal = Vector2.Zero;
+            return CollidesWith(other, ref dummyNormal);
         }
 
         public Shape Shape { get { return _circle; } }
