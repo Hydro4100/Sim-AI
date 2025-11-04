@@ -15,6 +15,7 @@ namespace MainQuest4_DragonDrop
         private Agent _agent;
         private Agent _agent2;
         private Agent _agent3;
+        private Agent _agent4;
         private Coin _coin;
         private Rock _rock;
 
@@ -65,6 +66,9 @@ namespace MainQuest4_DragonDrop
 
             _agent3 = new Agent(new Vector2(100, 100), 0f, this, new PathFollowingBehaviour(_path, 50f), 2, 0);
             Components.Add(_agent3);
+
+            _agent4 = new Agent(new Vector2(100, 100), 0f, this, new FleeBehaviour(_coin), 0, 1);
+            Components.Add(_agent4);
 
             base.Initialize();
         }
@@ -136,6 +140,7 @@ namespace MainQuest4_DragonDrop
             _agent.Draw(_spriteBatch, _dragonsTexture);
             _agent2.Draw(_spriteBatch, _dragonsTexture);
             _agent3.Draw(_spriteBatch, _dragonsTexture);
+            _agent4.Draw(_spriteBatch, _dragonsTexture);
             _spriteBatch.Draw(_coinsTexture, _coin.TextureRectangle, _coin.TextureSource, Color.White);
             _spriteBatch.Draw(_rockTexture, _rock.TextureRectangle, null, Color.White);
 
