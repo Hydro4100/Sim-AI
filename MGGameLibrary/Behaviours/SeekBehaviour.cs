@@ -1,7 +1,6 @@
-﻿using MGGameLibrary;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
-namespace MainQuest4_DragonDrop
+namespace MGGameLibrary.Behaviours
 {
     public class SeekBehaviour : SteeringBehaviour
     {
@@ -12,7 +11,7 @@ namespace MainQuest4_DragonDrop
             TargetPosition = target;
         }
 
-        public override Vector2 CalculateSteeringForce(Agent agent)
+        public override Vector2 CalculateSteeringForce(ISteerable agent)
         {
             Vector2 desiredVelocity = TargetPosition.TargetPosition - agent.Position;
 

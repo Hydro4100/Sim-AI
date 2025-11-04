@@ -1,10 +1,9 @@
-﻿using MGGameLibrary;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace MainQuest4_DragonDrop
+namespace MGGameLibrary.Behaviours
 {
-    internal class PathFollowingBehaviour : SteeringBehaviour
+    public class PathFollowingBehaviour : SteeringBehaviour
     {
         private List<ITargetable> _pathPoints;
         private int _currentTargetIndex;
@@ -23,7 +22,7 @@ namespace MainQuest4_DragonDrop
             }
         }
 
-        public override Vector2 CalculateSteeringForce(Agent agent)
+        public override Vector2 CalculateSteeringForce(ISteerable agent)
         {
             if (_pathPoints == null || _pathPoints.Count == 0)
             {

@@ -1,11 +1,12 @@
 ﻿using MGGameLibrary;
+using MGGameLibrary.Behaviours;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace MainQuest4_DragonDrop
 {
-    public class Agent : GameComponent, ITargetable
+    public class Agent : GameComponent, ITargetable, ISteerable
     {
         private SteeringBehaviour _behaviour;
         private PhysicsObject _physicsObject;

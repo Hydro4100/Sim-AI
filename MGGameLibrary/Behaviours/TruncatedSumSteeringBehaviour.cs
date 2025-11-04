@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace MainQuest4_DragonDrop
+namespace MGGameLibrary.Behaviours
 {
     public class TruncatedSumSteeringBehaviour : SteeringBehaviour
     {
@@ -14,7 +14,7 @@ namespace MainQuest4_DragonDrop
             _maxForce = maxForce;
         }
 
-        public override Vector2 CalculateSteeringForce(Agent agent)
+        public override Vector2 CalculateSteeringForce(ISteerable agent)
         {
             Vector2 totalForce = Vector2.Zero;
 
