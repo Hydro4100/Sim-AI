@@ -16,6 +16,7 @@ namespace MainQuest4_DragonDrop
         private Agent _agent2;
         private Agent _agent3;
         private Agent _agent4;
+        private Agent _agent5;
         private Coin _coin;
         private Rock _rock;
 
@@ -69,6 +70,22 @@ namespace MainQuest4_DragonDrop
 
             _agent4 = new Agent(new Vector2(100, 100), 0f, this, new FleeBehaviour(_coin), 0, 1);
             Components.Add(_agent4);
+
+            List<SteeringBehaviour> behaviours = new List<SteeringBehaviour>()
+            {
+                new FleeBehaviour(_coin),
+                new SeekBehaviour(_agent3),
+            };
+
+            TruncatedSumSteeringBehaviour truncatedSumBehaviour = new TruncatedSumSteeringBehaviour(behaviours, 150.0f);
+
+            _agent5 = new Agent(
+                new Vector2(600, 300),
+                0f,
+                this,
+                truncatedSumBehaviour,
+                1, 1);
+            Components.Add(_agent5);
 
             base.Initialize();
         }
@@ -141,6 +158,7 @@ namespace MainQuest4_DragonDrop
             _agent2.Draw(_spriteBatch, _dragonsTexture);
             _agent3.Draw(_spriteBatch, _dragonsTexture);
             _agent4.Draw(_spriteBatch, _dragonsTexture);
+            _agent5.Draw(_spriteBatch, _dragonsTexture);
             _spriteBatch.Draw(_coinsTexture, _coin.TextureRectangle, _coin.TextureSource, Color.White);
             _spriteBatch.Draw(_rockTexture, _rock.TextureRectangle, null, Color.White);
 
