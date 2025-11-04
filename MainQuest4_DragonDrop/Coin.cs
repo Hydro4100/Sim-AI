@@ -1,14 +1,17 @@
-﻿using MGGameLibrary.Shapes;
+﻿using MGGameLibrary;
+using MGGameLibrary.Shapes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MainQuest4_DragonDrop
 {
-    public class Coin
+    public class Coin : ITargetable
     {
         public Circle Circle { get; set; }
         public Rectangle TextureSource { get; set; }
         public Rectangle TextureRectangle { get; private set; }
+
+        public Vector2 TargetPosition => Circle.Centre;
 
         public Coin(Circle circle, Rectangle textureSource)
         {

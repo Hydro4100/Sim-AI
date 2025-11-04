@@ -11,11 +11,10 @@ namespace MainQuest4_DragonDrop
         private SpriteBatch _spriteBatch;
 
         private Agent _agent;
-        private Texture2D _dragonsTexture;
-
         private Coin _coin;
+
+        private Texture2D _dragonsTexture;
         private Texture2D _coinsTexture;
-        private const int CoinSize = 50;
 
         public Game4()
         {
@@ -26,19 +25,19 @@ namespace MainQuest4_DragonDrop
 
         protected override void Initialize()
         {
-            Vector2 agentStartPosition = new Vector2(GraphicsDevice.Viewport.Width / 2f, GraphicsDevice.Viewport.Height / 2f);
-            _agent = new Agent(agentStartPosition, 0f, this);
+            Vector2 initialAgentPosition = new Vector2(
+                _graphics.PreferredBackBufferWidth / 2,
+                _graphics.PreferredBackBufferHeight / 2
+            );
+
+            Circle coinCircle = new Circle(new Vector2(100, 100), 50);
+
+            _coin = new Coin(coinCircle, Rectangle.Empty);
+
+            SeekBehaviour seekBehaviour = new SeekBehaviour(_coin);
+
+            _agent = new Agent(initialAgentPosition, 0f, this, seekBehaviour);
             Components.Add(_agent);
-
-            Vector2 coinCenterPosition = new Vector2(GraphicsDevice.Viewport.Width - CoinSize, GraphicsDevice.Viewport.Height - CoinSize);
-
-            Circle coinCircle = new Circle(new Vector2(coinCenterPosition.X - CoinSize / 2f, coinCenterPosition.Y - CoinSize / 2f), CoinSize);
-
-            int spriteWidth = 100;
-            int spriteHeight = 100;
-
-            Rectangle dummySource = new Rectangle(0, 0, 1, 1);
-            _coin = new Coin(coinCircle, dummySource);
 
             base.Initialize();
         }
@@ -51,9 +50,7 @@ namespace MainQuest4_DragonDrop
             _coinsTexture = Content.Load<Texture2D>("coins");
             int coinSourceWidth = _coinsTexture.Width / 4;
             int coinSourceHeight = _coinsTexture.Height / 4;
-            int sourceX = 2 * coinSourceWidth;
-            int sourceY = 0 * coinSourceHeight;
-            _coin.TextureSource = new Rectangle(sourceX, sourceY, coinSourceWidth, coinSourceHeight);
+            _coin.TextureSource = new Rectangle(0, 0, coinSourceWidth, coinSourceHeight);
         }
 
         protected override void Update(GameTime gameTime)
