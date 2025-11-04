@@ -4,12 +4,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MainQuest5_PacManGhost
 {
-    public class Game1 : Game
+    public class Game5 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public Game1()
+        private Texture2D _lightBulbTexture;
+        private LightBulb _lightBulb;
+
+        public Game5()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -18,7 +21,8 @@ namespace MainQuest5_PacManGhost
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _lightBulb = new LightBulb(this);
+            Components.Add(_lightBulb);
 
             base.Initialize();
         }
@@ -27,7 +31,7 @@ namespace MainQuest5_PacManGhost
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _lightBulbTexture = Content.Load<Texture2D>("lightBulb");
         }
 
         protected override void Update(GameTime gameTime)
@@ -44,7 +48,9 @@ namespace MainQuest5_PacManGhost
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_lightBulbTexture, new Vector2(10, 10), _lightBulb.SourceRectangle, Color.White);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
