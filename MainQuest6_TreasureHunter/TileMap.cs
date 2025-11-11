@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using static MainQuest6_TreasureHunter.Tile;
 
 namespace MainQuest6_TreasureHunter
@@ -33,7 +31,7 @@ namespace MainQuest6_TreasureHunter
                     Tiles[i, j].OutLineColour = Color.Black;
                     Tiles[i, j].OutLineRectangle = new Rectangle(currentX, currentY, tileSize + tileBorder * 2, tileSize + tileBorder * 2);
                     Tiles[i, j].InFillRectangle = new Rectangle(currentX + tileBorder, currentY + tileBorder, tileSize, tileSize);
-                    
+
                     Tiles[i, j].Type = TileType.EMPTY;
                     Tiles[i, j].DistanceToFood = int.MaxValue;
                 }

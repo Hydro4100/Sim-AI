@@ -114,7 +114,12 @@ namespace MainQuest6_TreasureHunter
 
             _spriteBatch.Begin();
 
-            _tileMap.Draw(_spriteBatch);
+            //_tileMap.Draw(_spriteBatch);
+
+            foreach (NavMeshNode node in _navMesh.Graph.GetAllNodes())
+            {
+                _spriteBatch.Draw(_whitePixelTexture, node.Rectangle, node.Colour);
+            }
 
             foreach (NavMeshNode node in _navMesh.Graph.GetAllNodes())
             {
