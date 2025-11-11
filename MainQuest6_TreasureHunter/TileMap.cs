@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using static MainQuest6_TreasureHunter.Tile;
 
 namespace MainQuest6_TreasureHunter
 {
@@ -27,9 +29,10 @@ namespace MainQuest6_TreasureHunter
                 {
                     Tiles[i, j] = new Tile();
                     Tiles[i, j].OutLineColour = Color.Black;
-                    Tiles[i, j].InFillColour = Color.White;
+                    //Tiles[i, j].InFillColour = Color.White;
                     Tiles[i, j].OutLineRectangle = new Rectangle(currentX, currentY, tileSize + tileBorder * 2, tileSize + tileBorder * 2);
                     Tiles[i, j].InFillRectangle = new Rectangle(currentX + tileBorder, currentY + tileBorder, tileSize, tileSize);
+                    Tiles[i, j].Type = TileType.EMPTY;
                 }
                 currentY = 0;
             }
@@ -52,6 +55,29 @@ namespace MainQuest6_TreasureHunter
                     spriteBatch.Draw(_whitePixelTexture, Tiles[i, j].InFillRectangle, Tiles[i, j].InFillColour);
                 }
             }
+        }
+
+        public void ChangeType(Point point, Tile.TileType type)
+        {
+            int column = point.X / Size;
+            int row = point.Y / Size;
+
+            if (InvalidTile(column, row))
+                return;
+
+            Tile tile = Tiles[column, row];
+
+            tile.Type = type;
+        }
+
+        private bool InvalidTile(int col, int row)
+        {
+            return col < 0 || col >= Columns || row < 0 || row >= Rows;
+        }
+
+        private bool ValidTile(int col, int row)
+        {
+            return !InvalidTile(col, row);
         }
     }
 }

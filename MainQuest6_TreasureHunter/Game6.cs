@@ -40,7 +40,13 @@ namespace MainQuest6_TreasureHunter
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
+                {
+                    _tileMap.ChangeType(Mouse.GetState().Position, Tile.TileType.WALL);
+                }
+            }
 
             base.Update(gameTime);
         }

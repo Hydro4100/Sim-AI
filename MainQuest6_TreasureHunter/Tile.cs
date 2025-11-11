@@ -7,6 +7,22 @@ namespace MainQuest6_TreasureHunter
         public Rectangle OutLineRectangle;
         public Color OutLineColour;
         public Rectangle InFillRectangle;
-        public Color InFillColour;
+        public Color InFillColour
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case TileType.WALL:
+                        return Color.HotPink;
+                    default:
+                        return Color.White;
+                }
+            }
+        }
+
+        public enum TileType { WALL, FOOD, EMPTY };
+
+        public TileType Type { get; set; }
     }
 }
