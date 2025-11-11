@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using MGGameLibrary;
 
 namespace MainQuest5_PacManGhost
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace MainQuest5_PacManGhost
+namespace MGGameLibrary
 {
     public class SparseGraph<TNode, TEdge>
     {
