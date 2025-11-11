@@ -158,5 +158,57 @@ namespace MainQuest6_TreasureHunter
                 for (int j = 0; j < Rows; j++)
                     Tiles[i, j].OutLineColour = Color.Black;
         }
+
+        public void FindNewPath(Point point)
+        {
+            ClearPath();
+
+            int column = point.X / Size;
+            int row = point.Y / Size;
+
+            if (InvalidTile(column, row))
+                return;
+
+            int[] dx = { 0, 1, 0, -1 };
+            int[] dy = { -1, 0, 1, 0 };
+
+            int x = column;
+            int y = row;
+
+            while (Tiles[x, y].Type != Tile.TileType.FOOD)
+            {
+                Tiles[x, y].OutLineColour = Color.White;
+
+                float minDistance = float.MaxValue;
+                int nextX = x, nextY = y;
+
+                for (int dir = 0; dir < 4; dir++)
+                {
+                    int nx = x + dx[dir];
+                    int ny = y + dy[dir];
+
+                    if (ValidTile(nx, ny))
+                    {
+                        Tile neighbor = Tiles[nx, ny];
+                        if (neighbor.DistanceToFood < minDistance)
+                        {
+                            minDistance = neighbor.DistanceToFood;
+                            nextX = nx;
+                            nextY = ny;
+                        }
+                    }
+                }
+
+                // If we can't move, break to avoid infinite loop
+                if (nextX == x && nextY == y)
+                    break;
+
+                x = nextX;
+                y = nextY;
+            }
+
+            // Mark the food tile as well
+            Tiles[x, y].OutLineColour = Color.White;
+        }
     }
 }

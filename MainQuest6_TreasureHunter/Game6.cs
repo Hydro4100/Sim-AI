@@ -50,6 +50,10 @@ namespace MainQuest6_TreasureHunter
                 {
                     _tileMap.ChangeType(Mouse.GetState().Position, Tile.TileType.FOOD);
                 }
+                if (Keyboard.GetState().IsKeyDown(Keys.P))
+                {
+                    _tileMap.FindNewPath(Mouse.GetState().Position);
+                }
             }
 
             base.Update(gameTime);
