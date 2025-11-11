@@ -15,6 +15,8 @@ namespace MainQuest6_TreasureHunter
                 {
                     case TileType.WALL:
                         return Color.HotPink;
+                    case TileType.FOOD:
+                        return Color.CornflowerBlue;
                     default:
                         return Color.White;
                 }
