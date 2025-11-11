@@ -32,7 +32,7 @@ namespace MainQuest6_TreasureHunter
             _whitePixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             _whitePixelTexture.SetData(new Color[] { Color.White });
 
-            _tileMap = new TileMap(30, 20, _whitePixelTexture);
+            _tileMap = new TileMap(50, 30, _whitePixelTexture);
         }
 
         protected override void Update(GameTime gameTime)

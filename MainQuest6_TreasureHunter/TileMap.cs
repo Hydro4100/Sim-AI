@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Data.Common;
 using static MainQuest6_TreasureHunter.Tile;
 
 namespace MainQuest6_TreasureHunter
@@ -29,10 +31,11 @@ namespace MainQuest6_TreasureHunter
                 {
                     Tiles[i, j] = new Tile();
                     Tiles[i, j].OutLineColour = Color.Black;
-                    //Tiles[i, j].InFillColour = Color.White;
                     Tiles[i, j].OutLineRectangle = new Rectangle(currentX, currentY, tileSize + tileBorder * 2, tileSize + tileBorder * 2);
                     Tiles[i, j].InFillRectangle = new Rectangle(currentX + tileBorder, currentY + tileBorder, tileSize, tileSize);
+                    
                     Tiles[i, j].Type = TileType.EMPTY;
+                    Tiles[i, j].DistanceToFood = int.MaxValue;
                 }
                 currentY = 0;
             }
@@ -68,6 +71,11 @@ namespace MainQuest6_TreasureHunter
             Tile tile = Tiles[column, row];
 
             tile.Type = type;
+
+            if (type == TileType.FOOD)
+            {
+                AddFood(column, row);
+            }
         }
 
         private bool InvalidTile(int col, int row)
@@ -78,6 +86,44 @@ namespace MainQuest6_TreasureHunter
         private bool ValidTile(int col, int row)
         {
             return !InvalidTile(col, row);
+        }
+
+        public void AddFood(int column, int row)
+        {
+            if (InvalidTile(column, row))
+                return;
+
+            var queue = new Queue<(int x, int y)>();
+            queue.Enqueue((column, row));
+            Tiles[column, row].DistanceToFood = 0;
+
+            int[] dx = { 0, 1, 0, -1 };
+            int[] dy = { -1, 0, 1, 0 };
+
+            while (queue.Count > 0)
+            {
+                var (x, y) = queue.Dequeue();
+                float currentDistance = Tiles[x, y].DistanceToFood;
+
+                for (int dir = 0; dir < 4; dir++)
+                {
+                    int nx = x + dx[dir];
+                    int ny = y + dy[dir];
+
+                    if (ValidTile(nx, ny))
+                    {
+                        Tile neighbour = Tiles[nx, ny];
+                        if (neighbour.Type != Tile.TileType.WALL)
+                        {
+                            if (neighbour.DistanceToFood > currentDistance + 1)
+                            {
+                                neighbour.DistanceToFood = currentDistance + 1;
+                                queue.Enqueue((nx, ny));
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
