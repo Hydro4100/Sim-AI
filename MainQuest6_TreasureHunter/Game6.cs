@@ -110,7 +110,9 @@ namespace MainQuest6_TreasureHunter
                 }
                 if (!_mouseDown)
                 {
-                    _path.Add(Mouse.GetState().Position.ToVector2());
+                    (_pathEnds.to, _pathEnds.from) = (_pathEnds.from, _pathEnds.to);
+                    _pathEnds.to = Mouse.GetState().Position.ToVector2();
+                    _path = _navMesh.GetDijkstraPath(_pathEnds);
                 }
                 _mouseDown = true;
             }
