@@ -76,6 +76,10 @@ namespace MainQuest6_TreasureHunter
             {
                 AddFood(column, row);
             }
+            else if (type == TileType.WALL)
+            {
+                UpdateDistances();
+            }
         }
 
         private bool InvalidTile(int col, int row)
@@ -124,6 +128,35 @@ namespace MainQuest6_TreasureHunter
                     }
                 }
             }
+        }
+
+        public void UpdateDistances()
+        {
+            List<(int, int)> foodLocations = new List<(int, int)>();
+
+            for (int i = 0; i < Columns; i++)
+                for (int j = 0; j < Rows; j++)
+                    if (Tiles[i, j].Type == Tile.TileType.FOOD)
+                        foodLocations.Add((i, j));
+
+            // Reset all distances
+            for (int i = 0; i < Columns; i++)
+                for (int j = 0; j < Rows; j++)
+                    Tiles[i, j].DistanceToFood = int.MaxValue;
+
+            ClearPath();
+
+            foreach ((int, int) foodLocation in foodLocations)
+            {
+                AddFood(foodLocation.Item1, foodLocation.Item2);
+            }
+        }
+
+        public void ClearPath()
+        {
+            for (int i = 0; i < Columns; i++)
+                for (int j = 0; j < Rows; j++)
+                    Tiles[i, j].OutLineColour = Color.Black;
         }
     }
 }
