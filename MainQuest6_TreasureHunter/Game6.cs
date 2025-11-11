@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace MainQuest6_TreasureHunter
 {
@@ -12,6 +13,10 @@ namespace MainQuest6_TreasureHunter
         private Texture2D _whitePixelTexture;
         private TileMap _tileMap;
         private NavMesh _navMesh;
+
+        private bool _mouseDown;
+        private List<Vector2> _path = new();
+        private (Vector2 from, Vector2 to) _pathEnds = (new Vector2(50, 50), new Vector2(50, 100));
 
         public Game6()
         {
@@ -103,6 +108,15 @@ namespace MainQuest6_TreasureHunter
                 {
                     _tileMap.FindNewPath(Mouse.GetState().Position);
                 }
+                if (!_mouseDown)
+                {
+                    _path.Add(Mouse.GetState().Position.ToVector2());
+                }
+                _mouseDown = true;
+            }
+            else
+            {
+                _mouseDown = false;
             }
 
             base.Update(gameTime);
@@ -127,6 +141,11 @@ namespace MainQuest6_TreasureHunter
                 {
                     DrawLine(node.Centre, neighbour.Centre, new(Color.Red, 0.125f), 2f);
                 }
+            }
+
+            for (int i = 1; i < _path.Count; i++)
+            {
+                DrawLine(_path[i - 1], _path[i], Color.Yellow, 4);
             }
 
             _spriteBatch.End();
