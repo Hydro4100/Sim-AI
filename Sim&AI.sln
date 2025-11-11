@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainQuest4_DragonDrop", "Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainQuest5_PacManGhost", "MainQuest5_PacManGhost\MainQuest5_PacManGhost.csproj", "{ED249288-18AC-4DDA-B280-6D79986D32C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainQuest6_TreasureHunter", "MainQuest6_TreasureHunter\MainQuest6_TreasureHunter.csproj", "{2CAE692E-3DD3-4D2C-AA14-33036A486ED4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{ED249288-18AC-4DDA-B280-6D79986D32C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED249288-18AC-4DDA-B280-6D79986D32C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED249288-18AC-4DDA-B280-6D79986D32C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CAE692E-3DD3-4D2C-AA14-33036A486ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CAE692E-3DD3-4D2C-AA14-33036A486ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CAE692E-3DD3-4D2C-AA14-33036A486ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CAE692E-3DD3-4D2C-AA14-33036A486ED4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
