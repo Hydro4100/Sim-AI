@@ -4,12 +4,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MainQuest6_TreasureHunter
 {
-    public class Game1 : Game
+    public class Game6 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Texture2D _whitePixelTexture;
+        private TileMap _tileMap;
 
-        public Game1()
+        public Game6()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -27,7 +29,10 @@ namespace MainQuest6_TreasureHunter
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _whitePixelTexture = new Texture2D(GraphicsDevice, 1, 1);
+            _whitePixelTexture.SetData(new Color[] { Color.White });
+
+            _tileMap = new TileMap(30, 20, _whitePixelTexture);
         }
 
         protected override void Update(GameTime gameTime)
@@ -44,7 +49,11 @@ namespace MainQuest6_TreasureHunter
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+
+            _tileMap.Draw(_spriteBatch);
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

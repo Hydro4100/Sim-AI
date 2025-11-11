@@ -1,2 +1,2 @@
-﻿using var game = new MainQuest6_TreasureHunter.Game1();
+﻿using var game = new MainQuest6_TreasureHunter.Game6();
 game.Run();
