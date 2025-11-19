@@ -93,5 +93,78 @@ namespace MainQuest6_TreasureHunter
             }
             return null;
         }
+
+        public List<Vector2> GetAStarPath((Vector2 from, Vector2 to) _pathEnds)
+        {
+            List<Vector2> result = new();
+
+            NavMeshNode fromNode = PointInsideNode(_pathEnds.from);
+            NavMeshNode toNode = PointInsideNode(_pathEnds.to);
+
+            if (fromNode == null || toNode == null)
+            {
+                return result;
+            }
+
+            if (fromNode == toNode)
+            {
+                result.Add(_pathEnds.from);
+                result.Add(_pathEnds.to);
+                return result;
+            }
+
+            var gScore = new Dictionary<NavMeshNode, float>();
+            var fScore = new Dictionary<NavMeshNode, float>();
+            var previous = new Dictionary<NavMeshNode, NavMeshNode>();
+            var queue = new PriorityQueue<NavMeshNode, float>();
+
+            foreach (NavMeshNode node in Graph.GetAllNodes())
+            {
+                gScore[node] = float.MaxValue;
+                fScore[node] = float.MaxValue;
+                previous[node] = null;
+            }
+
+            gScore[fromNode] = 0;
+            fScore[fromNode] = Vector2.Distance(fromNode.Centre, toNode.Centre);
+            queue.Enqueue(fromNode, fScore[fromNode]);
+
+            while (queue.Count > 0)
+            {
+                NavMeshNode current = queue.Dequeue();
+
+                if (current == toNode)
+                {
+                    break;
+                }
+
+                foreach ((NavMeshEdge edge, NavMeshNode neighbor) in Graph.GetEdges(current))
+                {
+                    float tentativeG = gScore[current] + edge.Cost;
+
+                    if (tentativeG < gScore[neighbor])
+                    {
+                        gScore[neighbor] = tentativeG;
+                        fScore[neighbor] = tentativeG + Vector2.Distance(neighbor.Centre, toNode.Centre);
+
+                        previous[neighbor] = current;
+                        queue.Enqueue(neighbor, fScore[neighbor]);
+                    }
+                }
+            }
+
+            result.Add(_pathEnds.to);
+            NavMeshNode nextNode = toNode;
+            while (nextNode != null)
+            {
+                result.Add(nextNode.Centre);
+                nextNode = previous[nextNode];
+            }
+            result.Add(_pathEnds.from);
+
+            result.Reverse();
+
+            return result;
+        }
     }
 }
