@@ -29,7 +29,7 @@ namespace MainQuest6_TreasureHunter
         {
             _navMesh = new NavMesh();
 
-            NavMeshNode[] nodes = new NavMeshNode[33];
+            NavMeshNode[] nodes = new NavMeshNode[36];
 
             nodes[0] = new NavMeshNode(new Rectangle(10, 10, 80, 200), Color.Green);
             nodes[1] = new NavMeshNode(new Rectangle(10, 210, 80, 50), Color.Blue);
@@ -64,6 +64,9 @@ namespace MainQuest6_TreasureHunter
             nodes[30] = new NavMeshNode(new Rectangle(410, 150, 80, 50), Color.Green);
             nodes[31] = new NavMeshNode(new Rectangle(430, 140, 40, 10), Color.Blue);
             nodes[32] = new NavMeshNode(new Rectangle(410, 10, 80, 130), Color.Green);
+            nodes[33] = new NavMeshNode(new Rectangle(100, 70, 50, 10), Color.Red);
+            nodes[34] = new NavMeshNode(new Rectangle(340, 200, 10, 50), Color.Red);
+            nodes[35] = new NavMeshNode(new Rectangle(90, 260, 10, 30), Color.Red);
 
             AddEdges(nodes, new (int, int)[]
             {
@@ -73,7 +76,10 @@ namespace MainQuest6_TreasureHunter
                 (15, 16), (16, 17), (9, 18), (18, 19), (19, 20),
                 (19, 21), (11, 22), (22, 23), (23, 24), (24, 25),
                 (25, 26), (25, 27), (27, 28), (28, 29), (28, 30),
-                (30, 31), (31, 32)
+                (30, 31), (31, 32),
+                (17, 33), (33, 7),
+                (21, 34), (34, 25),
+                (2, 35), (35, 5)
             });
 
             base.Initialize();
