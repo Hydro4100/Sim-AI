@@ -133,7 +133,7 @@ namespace MainQuest3_AztecDeflect
             foreach (Disc disc in _discsList)
             {
                 Circle circle = disc.Shape as Circle;
-                Rectangle r = new Rectangle((int)(disc.Position.X - circle.Radius), (int)(disc.Position.Y - circle.Radius), (int)circle.Radius * 2, (int)circle.Radius * 2);
+                Rectangle r = new Rectangle((int)disc.Position.X, (int)disc.Position.Y, (int)circle.Radius * 2, (int)circle.Radius * 2);
 
                 _spriteBatch.Draw(_textures, r, new Rectangle(512, 0, 256, 256), Color.Red);
             }
