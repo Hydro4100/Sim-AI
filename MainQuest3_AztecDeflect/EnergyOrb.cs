@@ -9,6 +9,7 @@ namespace MainQuest3_AztecDeflect
     {
         public Vector2 Position;
         public Vector2 Velocity;
+
         public Rectangle Rectangle
         {
             get
@@ -30,11 +31,18 @@ namespace MainQuest3_AztecDeflect
         public override void Update(GameTime gameTime)
         {
             _previousPosition = Position;
-            Position = Position + (float)gameTime.ElapsedGameTime.TotalSeconds * Velocity; // Euler Integration
+            Position = Position + (float)gameTime.ElapsedGameTime.TotalSeconds * Velocity;
             base.Update(gameTime);
         }
 
-        public Shape Shape { get { return new Circle(Position, ORB_RADIUS); } } // yuck, inefficient
+        public Shape Shape
+        {
+            get
+            {
+                Vector2 topLeft = new Vector2(Position.X - ORB_RADIUS, Position.Y - ORB_RADIUS);
+                return new Circle(topLeft, ORB_RADIUS * 2);
+            }
+        }
 
         public bool CollidesWith(ICollidable other, ref Vector2 collisionNormal)
         {

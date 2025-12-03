@@ -19,7 +19,12 @@ namespace MainQuest3_AztecDeflect
         {
             base.Update(deltaTime);
             _circle.Position = Position;
-            _circle.Centre = new Vector2(Position.X + _circle.Radius, Position.Y + _circle.Radius);
+        }
+
+        public override void RevertToPreviousPosition()
+        {
+            base.RevertToPreviousPosition();
+            _circle.Position = Position;
         }
 
         public bool CollidesWith(ICollidable other, ref Vector2 collisionNormal)

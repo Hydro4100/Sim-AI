@@ -33,7 +33,7 @@ namespace MGGameLibrary
             _force = Vector2.Zero;
         }
 
-        public void RevertToPreviousPosition()
+        public virtual void RevertToPreviousPosition()
         {
             _position = _previousPosition;
         }

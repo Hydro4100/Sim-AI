@@ -18,10 +18,15 @@ namespace MGGameLibrary.Shapes
 
         public override bool Intersects(Shape other, ref Vector2 collisionNormal)
         {
-            return false;
+            return other.IntersectsSquare(this, ref collisionNormal);
         }
 
         public override bool IntersectsCircle(Circle other, ref Vector2 collisionNormal)
+        {
+            return Shape.Intersects(other, this, ref collisionNormal);
+        }
+
+        public override bool IntersectsSquare(Square other, ref Vector2 collisionNormal)
         {
             return false;
         }

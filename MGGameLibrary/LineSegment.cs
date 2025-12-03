@@ -32,5 +32,10 @@ namespace MGGameLibrary
         {
             throw new NotImplementedException();
         }
+
+        public override bool IntersectsSquare(Square other, ref Vector2 collisionNormal)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

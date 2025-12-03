@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace MGGameLibrary.Shapes
 {
@@ -25,6 +26,12 @@ namespace MGGameLibrary.Shapes
             _rectangle = newRect;
         }
 
+        public abstract bool IsInside(Point point);
+
+        public abstract bool Intersects(Shape other, ref Vector2 collisionNormal);
+        public abstract bool IntersectsCircle(Circle other, ref Vector2 collisionNormal);
+        public abstract bool IntersectsSquare(Square other, ref Vector2 collisionNormal);
+
         public static bool Intersects(Circle c1, Circle c2, ref Vector2 collisionNormal)
         {
             float distanceSquared = Vector2.DistanceSquared(c1.Centre, c2.Centre);
@@ -39,25 +46,35 @@ namespace MGGameLibrary.Shapes
             return collision;
         }
 
+        public static bool Intersects(Circle c, Square s, ref Vector2 collisionNormal)
+        {
+            float closestX = Math.Clamp(c.Centre.X, s.Position.X, s.Position.X + s.Size);
+            float closestY = Math.Clamp(c.Centre.Y, s.Position.Y, s.Position.Y + s.Size);
+
+            Vector2 closestPoint = new Vector2(closestX, closestY);
+
+            Vector2 diff = c.Centre - closestPoint;
+            float distancesquared = diff.LengthSquared();
+
+            if (distancesquared <= c.Radius * c.Radius)
+            {
+                collisionNormal = diff != Vector2.Zero ? Vector2.Normalize(diff) : Vector2.UnitY;
+                return true;
+            }
+
+            collisionNormal = Vector2.Zero;
+            return false;
+        }
+
         public static bool Intersects(LineSegment line, Circle circle)
         {
             Vector2 toCircle = circle.Centre - line.Start;
             Vector2 lineDir = line.End - line.Start;
-
             float t = Vector2.Dot(toCircle, lineDir) / Vector2.Dot(lineDir, lineDir);
-
             t = MathHelper.Clamp(t, 0.0f, 1.0f);
-
             Vector2 closestPoint = line.Start + t * lineDir;
-
             float distanceSquared = Vector2.DistanceSquared(closestPoint, circle.Centre);
             return distanceSquared <= circle.Radius * circle.Radius;
         }
-
-        public abstract bool IsInside(Point point);
-
-        public abstract bool Intersects(Shape other, ref Vector2 collisionNormal);
-
-        public abstract bool IntersectsCircle(Circle other, ref Vector2 collisionNormal);
     }
 }
