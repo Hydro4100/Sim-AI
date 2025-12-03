@@ -1,4 +1,5 @@
-﻿namespace MainQuest5_PacManGhost
+﻿using MGGameLibrary;
+namespace MainQuest5_PacManGhost
 {
     public class FiniteStateMachine<TNode, TEdge>
         where TNode : IState
