@@ -27,19 +27,21 @@ namespace MGGameLibrary
         public virtual void Update(float deltaTime)
         {
             _previousPosition = _position;
-            // a = F/m
             Vector2 acceleration = _force / _mass;
-            // v = v0 + at
             _velocity += acceleration * deltaTime;
-            // s = s0 + vt
             _position += _velocity * deltaTime;
-            // Reset force for next frame
             _force = Vector2.Zero;
         }
 
         public void RevertToPreviousPosition()
         {
             _position = _previousPosition;
+        }
+
+        public void ApplyGravity()
+        {
+            const float GRAVITY = 250f;
+            _force += new Vector2(0, GRAVITY * _mass);
         }
 
         public Vector2 Position { get { return _position; } set { _position = value; } }

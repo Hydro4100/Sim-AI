@@ -87,8 +87,7 @@ namespace MainQuest3_AztecDeflect
             {
                 Disc disc = _discsList[i];
 
-                Vector2 gravityForce = new Vector2(0, Disc.DISC_MASS * GRAVITY_ACCELERATION);
-                disc.ApplyForce(gravityForce);
+                disc.ApplyGravity();
 
                 disc.Update((float)TargetElapsedTime.TotalSeconds);
 
