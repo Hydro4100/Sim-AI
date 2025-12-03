@@ -37,14 +37,14 @@ namespace MainQuest3_AztecDeflect
             _playerShip = new PlayerShip(this);
             Components.Add(_playerShip);
 
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(10, 10), 40)));
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(400, 400), 40)));
+            int h = GraphicsDevice.Viewport.Height / 2;
+            int w = GraphicsDevice.Viewport.Width / 2;
 
-            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(100, 100), this));
-            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(300, 300), this));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(150, h), 75)));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width - 150, h), 75)));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(w, 150), 75)));
 
-            _discsList[0].ApplyImpulse(new Vector2(100, 100), (float)TargetElapsedTime.TotalSeconds);
-            _discsList[1].ApplyImpulse(new Vector2(-100, -100), (float)TargetElapsedTime.TotalSeconds);
+            _obstaclesList.Add(new Obstacle(new Square(new Vector2(w, h), 75)));
 
             base.Initialize();
         }
@@ -146,9 +146,23 @@ namespace MainQuest3_AztecDeflect
             {
                 if (obstacle.Shape is Circle circle)
                 {
-                    Rectangle r = new Rectangle((int)(circle.Centre.X - circle.Radius), (int)(circle.Centre.Y - circle.Radius), (int)circle.Radius * 2, (int)circle.Radius * 2);
+                    Rectangle r = new Rectangle(
+                        (int)(circle.Centre.X - circle.Radius),
+                        (int)(circle.Centre.Y - circle.Radius),
+                        (int)circle.Radius * 2,
+                        (int)circle.Radius * 2);
 
                     _spriteBatch.Draw(_textures, r, new Rectangle(256, 0, 256, 256), Color.White);
+                }
+                else if (obstacle.Shape is Square square)
+                {
+                    Rectangle r = new Rectangle(
+                        (int)square.Position.X,
+                        (int)square.Position.Y,
+                        (int)square.Size,
+                        (int)square.Size);
+
+                    _spriteBatch.Draw(_textures, r, new Rectangle(256, 256, 256, 256), Color.White);
                 }
             }
 

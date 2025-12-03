@@ -5,8 +5,10 @@ namespace MGGameLibrary.Shapes
     public class Square : Shape
     {
         public float Size;
+
         public Square(Vector2 position, int size) : base(position, size)
         {
+            Size = size;
         }
 
         public override bool IsInside(Point point)
@@ -16,12 +18,12 @@ namespace MGGameLibrary.Shapes
 
         public override bool Intersects(Shape other, ref Vector2 collisionNormal)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
 
         public override bool IntersectsCircle(Circle other, ref Vector2 collisionNormal)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
     }
 }
