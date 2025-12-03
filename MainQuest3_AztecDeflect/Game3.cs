@@ -37,14 +37,14 @@ namespace MainQuest3_AztecDeflect
             _playerShip = new PlayerShip(this);
             Components.Add(_playerShip);
 
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(10, GraphicsDevice.Viewport.Height / 2), 40)));
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(500, GraphicsDevice.Viewport.Height / 2), 40)));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(10, 10), 40)));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(400, 400), 40)));
 
-            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(100, GraphicsDevice.Viewport.Height / 2), this));
-            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(400, GraphicsDevice.Viewport.Height / 2), this));
+            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(100, 100), this));
+            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(300, 300), this));
 
-            _discsList[0].ApplyImpulse(new Vector2(100, 0), (float)TargetElapsedTime.TotalSeconds);
-            _discsList[1].ApplyImpulse(new Vector2(-100, 0), (float)TargetElapsedTime.TotalSeconds);
+            _discsList[0].ApplyImpulse(new Vector2(100, 100), (float)TargetElapsedTime.TotalSeconds);
+            _discsList[1].ApplyImpulse(new Vector2(-100, -100), (float)TargetElapsedTime.TotalSeconds);
 
             base.Initialize();
         }
@@ -112,8 +112,14 @@ namespace MainQuest3_AztecDeflect
 
                     if (disc.CollidesWith(otherDisc, ref normal))
                     {
-                        disc.Velocity = Vector2.Zero;
-                        otherDisc.Velocity = Vector2.Zero;
+                        Vector2 parallel1 = Vector2.Dot(disc.Velocity, normal) * normal;
+                        Vector2 perpendicular1 = disc.Velocity - parallel1;
+
+                        Vector2 parallel2 = Vector2.Dot(otherDisc.Velocity, normal) * normal;
+                        Vector2 perpendicular2 = otherDisc.Velocity - parallel2;
+
+                        disc.Velocity = perpendicular1 + parallel2;
+                        otherDisc.Velocity = perpendicular2 + parallel1;
                     }
                 }
             }
