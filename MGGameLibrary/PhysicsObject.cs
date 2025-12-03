@@ -44,6 +44,12 @@ namespace MGGameLibrary
             _force += new Vector2(0, GRAVITY * _mass);
         }
 
+        public void ApplyImpulse(Vector2 changeInVelocity, float deltaTime)
+        {
+            Vector2 force = _mass * changeInVelocity / deltaTime;
+            ApplyForce(force);
+        }
+
         public Vector2 Position { get { return _position; } set { _position = value; } }
         public Vector2 Velocity { get { return _velocity; } set { _velocity = value; } }
     }

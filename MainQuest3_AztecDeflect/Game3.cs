@@ -96,7 +96,9 @@ namespace MainQuest3_AztecDeflect
                     if (obstacle.CollidesWith(disc, ref collisionNormal))
                     {
                         disc.RevertToPreviousPosition();
-                        disc.Velocity = Vector2.Reflect(disc.Velocity, collisionNormal);
+                        Vector2 desiredVelocity = Vector2.Reflect(disc.Velocity, collisionNormal);
+                        float deltaTime = (float)TargetElapsedTime.TotalSeconds;
+                        disc.ApplyImpulse(desiredVelocity - disc.Velocity, deltaTime);
                     }
                 }
             }
