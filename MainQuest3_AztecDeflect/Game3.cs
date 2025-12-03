@@ -37,11 +37,14 @@ namespace MainQuest3_AztecDeflect
             _playerShip = new PlayerShip(this);
             Components.Add(_playerShip);
 
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 100)));
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(100, 300), 50)));
-            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(GraphicsDevice.Viewport.Width - 100, 200), 70)));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(10, GraphicsDevice.Viewport.Height / 2), 40)));
+            _obstaclesList.Add(new Obstacle(new Circle(new Vector2(500, GraphicsDevice.Viewport.Height / 2), 40)));
 
-            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(75, 75), this));
+            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(100, GraphicsDevice.Viewport.Height / 2), this));
+            _discsList.Add(new Disc(Disc.DISC_MASS, new Vector2(400, GraphicsDevice.Viewport.Height / 2), this));
+
+            _discsList[0].ApplyImpulse(new Vector2(100, 0), (float)TargetElapsedTime.TotalSeconds);
+            _discsList[1].ApplyImpulse(new Vector2(-100, 0), (float)TargetElapsedTime.TotalSeconds);
 
             base.Initialize();
         }
@@ -87,7 +90,7 @@ namespace MainQuest3_AztecDeflect
             {
                 Disc disc = _discsList[i];
 
-                disc.ApplyGravity();
+                //disc.ApplyGravity();
 
                 disc.Update((float)TargetElapsedTime.TotalSeconds);
 
@@ -99,6 +102,18 @@ namespace MainQuest3_AztecDeflect
                         Vector2 desiredVelocity = Vector2.Reflect(disc.Velocity, collisionNormal);
                         float deltaTime = (float)TargetElapsedTime.TotalSeconds;
                         disc.ApplyImpulse(desiredVelocity - disc.Velocity, deltaTime);
+                    }
+                }
+
+                for (int j = i + 1; j < _discsList.Count; j++)
+                {
+                    Disc otherDisc = _discsList[j];
+                    Vector2 normal = Vector2.Zero;
+
+                    if (disc.CollidesWith(otherDisc, ref normal))
+                    {
+                        disc.Velocity = Vector2.Zero;
+                        otherDisc.Velocity = Vector2.Zero;
                     }
                 }
             }
