@@ -58,8 +58,6 @@ namespace MainQuest4_DragonDrop
                 (int)(Circle.Radius * 2),
                 (int)(Circle.Radius * 2)
             );
-
-            Circle.Centre = TargetPosition;
         }
     }
 }
